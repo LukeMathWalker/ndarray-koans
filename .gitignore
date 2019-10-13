@@ -17,4 +17,7 @@ Cargo.lock
 /target
 #**/*.rs.bk
 
+# Ignore solved koan file
+src/path_to_enlightenment.rs
+
 .idea
