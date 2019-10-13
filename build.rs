@@ -14,7 +14,8 @@ fn main() {
             }
         },
         Ok(f) => {
-            write!(&f, "koan!(\"00_greetings.rs\");\n").unwrap();
+            // Initialise as an empty file
+            write!(&f, "").unwrap();
         },
     }
 }
