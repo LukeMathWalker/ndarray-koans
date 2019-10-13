@@ -47,11 +47,14 @@ fn seek_the_path() -> bool {
 }
 
 fn get_koans() -> Vec<OsString> {
-    read_dir("src/koans")
+    let mut koans: Vec<OsString> = read_dir("src/koans")
         .unwrap()
         .into_iter()
         .map(|f| f.unwrap().file_name())
-        .collect()
+        .collect();
+    // Sort them in lexicographical order - koans are prefixed with `dd_`
+    koans.sort();
+    koans
 }
 
 fn run_tests() -> bool {
