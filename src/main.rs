@@ -1,15 +1,12 @@
-#[cfg(not(test))]
+#![allow(dead_code)]
+#![allow(unused_imports)]
+#![allow(unused_macros)]
+
 use std::process::Command;
-
-#[cfg(not(test))]
-use std::fs::{File, OpenOptions};
-
-use std::fs::read_dir;
-#[cfg(not(test))]
+use std::fs::{read_dir, OpenOptions};
 use std::io::{BufRead, BufReader, Write};
 use std::ffi::OsString;
 
-#[cfg(not(test))]
 fn main() {
     let message = if run_tests() {
         if seek_the_path() {
@@ -24,14 +21,12 @@ fn main() {
     println!("{}", message);
 }
 
-#[allow(unused_macros)]
 macro_rules! koan {
     ($name:expr) => {
         include!(concat!("koans/", $name));
     };
 }
 
-#[cfg(not(test))]
 fn seek_the_path() -> bool {
     let koans = get_koans();
     let mut path = OpenOptions::new()
@@ -59,7 +54,6 @@ fn get_koans() -> Vec<OsString> {
         .collect()
 }
 
-#[cfg(not(test))]
 fn run_tests() -> bool {
     Command::new("cargo")
         .arg("test")
