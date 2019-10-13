@@ -11,7 +11,7 @@ use std::ffi::OsString;
 
 #[cfg(not(test))]
 fn main() {
-    let message = if walk_the_path() {
+    let message = if run_tests() {
         if seek_the_path() {
             "Eternity lies ahead of us, and behind. Your path is not yet finished."
         } else {
@@ -27,7 +27,7 @@ fn main() {
 #[allow(unused_macros)]
 macro_rules! koan {
     ($name:expr) => {
-        include!(concat!("koans/", $name, ".rs"));
+        include!(concat!("koans/", $name));
     };
 }
 
@@ -39,9 +39,9 @@ fn seek_the_path() -> bool {
         .append(true)
         .open("src/path_to_enlightenment.rs")
         .unwrap();
-    let passed_count = BufReader::new(&path).lines().count();
+    let n_solved_koans = BufReader::new(&path).lines().count();
 
-    if let Some(next_koan) = koans.into_iter().nth(passed_count) {
+    if let Some(next_koan) = koans.into_iter().nth(n_solved_koans) {
         println!("Ahead of you lies {:?}.", next_koan);
         write!(&mut path, "koan!({:?});\n", next_koan).unwrap();
         true
@@ -55,12 +55,12 @@ fn get_koans() -> Vec<OsString> {
     read_dir("src/koans")
         .unwrap()
         .into_iter()
-        .map(|f| f.unwrap().file_name().into())
+        .map(|f| f.unwrap().file_name())
         .collect()
 }
 
 #[cfg(not(test))]
-fn walk_the_path() -> bool {
+fn run_tests() -> bool {
     Command::new("cargo")
         .arg("test")
         .arg("-q")
