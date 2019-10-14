@@ -2,6 +2,8 @@
 #![allow(unused_imports)]
 #![allow(unused_macros)]
 
+use ansi_term::Colour::{Green, Red, White};
+use ansi_term::Style;
 use regex::Regex;
 use std::convert::TryInto;
 use std::ffi::OsString;
@@ -59,15 +61,20 @@ fn seek_the_path() -> bool {
         .unwrap();
     let n_opened_koans = BufReader::new(&path).lines().count();
 
-    print!(" \n\n\n");
+    print!(" \n\n");
     for koan in koans.iter().take(n_opened_koans) {
         if !run_tests(Some(&koan.name), false) {
-            println!("\tKoan: {} ❌", koan.name);
-            println!("\nMeditate on your approach and return. Mountains are merely mountains.");
+            println!("\t❌ {}", Red.normal().paint(&koan.name));
+            println!(
+                "\n\t{}",
+                Style::default()
+                    .italic()
+                    .paint("Meditate on your approach and return. Mountains are merely mountains.")
+            );
             run_tests(Some(&koan.name), true);
             return false;
         } else {
-            println!("\tKoan: {} ✔️", koan.name);
+            println!("\t🚀 {}️", Green.normal().paint(&koan.name));
         }
     }
 
