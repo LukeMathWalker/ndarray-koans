@@ -4,43 +4,15 @@
 
 use ansi_term::Colour::{Green, Red, White, Yellow};
 use ansi_term::Style;
-use regex::Regex;
-use std::convert::TryInto;
-use std::ffi::OsString;
-use std::fs::{read_dir, OpenOptions};
-use std::io::{BufRead, BufReader, Write};
+use koans::KoanCollection;
 use std::process::{Command, ExitStatus, Stdio};
 
-struct Koan {
-    name: String,
-    number: usize,
-}
-
-impl From<OsString> for Koan {
-    fn from(filename: OsString) -> Self {
-        let filename = filename.into_string().unwrap();
-        let re = Regex::new(r"(?P<number>\d{2})_(?P<name>\w+)\.rs").unwrap();
-        match re.captures(&filename) {
-            None => panic!("Failed to parse koan name."),
-            Some(s) => Koan {
-                name: s["name"].into(),
-                number: s["number"].parse().unwrap(),
-            },
-        }
-    }
-}
-
-impl Into<String> for Koan {
-    fn into(self) -> String {
-        format!("{:02}_{}", self.number, self.name)
-    }
-}
-
 fn main() {
-    let message = if !seek_the_path() {
+    let mut koans = KoanCollection::new("src/koans", "src/path_to_enlightenment.rs");
+    let message = if !seek_the_path(&koans) {
         "Eternity lies ahead of us, and behind. Your path is not yet finished. 🍂"
     } else {
-        if walk_the_path() {
+        if walk_the_path(&mut koans) {
             "Eternity lies ahead of us, and behind. Your path is not yet finished. 🍂"
         } else {
             "What is the sound of one hand clapping (for you)? 🌟"
@@ -56,17 +28,9 @@ macro_rules! koan {
     };
 }
 
-fn seek_the_path() -> bool {
-    let koans = get_koans();
-    let path = OpenOptions::new()
-        .read(true)
-        .append(true)
-        .open("src/path_to_enlightenment.rs")
-        .unwrap();
-    let n_opened_koans = BufReader::new(&path).lines().count();
-
+fn seek_the_path(koans: &KoanCollection) -> bool {
     print!(" \n\n");
-    for koan in koans.iter().take(n_opened_koans) {
+    for koan in koans.opened() {
         let koan_outcome = run_tests(Some(&koan.name));
         match koan_outcome {
             TestOutcome::Success => {
@@ -88,23 +52,13 @@ fn seek_the_path() -> bool {
     true
 }
 
-fn walk_the_path() -> bool {
-    let koans = get_koans();
-    let mut path = OpenOptions::new()
-        .read(true)
-        .append(true)
-        .open("src/path_to_enlightenment.rs")
-        .unwrap();
-    let n_opened_koans = BufReader::new(&path).lines().count();
-
-    if let Some(next_koan) = koans.into_iter().nth(n_opened_koans) {
+fn walk_the_path(koans: &mut KoanCollection) -> bool {
+    if let Ok(new_koan) = koans.open_next() {
         println!(
             "{} {}.",
             Yellow.normal().paint("\n\tAhead of you lies"),
-            Yellow.bold().paint(&next_koan.name)
+            Yellow.bold().paint(&new_koan.name)
         );
-        let koan_filename: String = next_koan.into();
-        write!(&mut path, "koan!(\"{:}\");\n", koan_filename).unwrap();
         true
     } else {
         println!(
@@ -113,17 +67,6 @@ fn walk_the_path() -> bool {
         );
         false
     }
-}
-
-fn get_koans() -> Vec<Koan> {
-    let mut koans: Vec<OsString> = read_dir("src/koans")
-        .unwrap()
-        .into_iter()
-        .map(|f| f.unwrap().file_name())
-        .collect();
-    // Sort them in lexicographical order - koans are prefixed with `dd_`
-    koans.sort();
-    koans.into_iter().map(|f| f.into()).collect()
 }
 
 fn run_tests(filter: Option<&str>) -> TestOutcome {

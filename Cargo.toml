@@ -8,3 +8,11 @@ build = "build.rs"
 [dependencies]
 regex = "1.3.1"
 ansi_term = "0.12.1"
+
+[[bin]]
+name = "koans"
+path = "src/main.rs"
+
+[lib]
+name = "koans"
+path = "src/lib.rs"
