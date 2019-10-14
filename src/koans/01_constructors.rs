@@ -7,6 +7,6 @@ mod constructors {
 
     #[test]
     fn constructors_normal() {
-        assert!(false);
+        assert!(true);
     }
 }

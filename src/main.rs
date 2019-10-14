@@ -2,14 +2,14 @@
 #![allow(unused_imports)]
 #![allow(unused_macros)]
 
-use ansi_term::Colour::{Green, Red, White};
+use ansi_term::Colour::{Green, Red, White, Yellow};
 use ansi_term::Style;
 use regex::Regex;
 use std::convert::TryInto;
 use std::ffi::OsString;
 use std::fs::{read_dir, OpenOptions};
 use std::io::{BufRead, BufReader, Write};
-use std::process::{Command, Stdio};
+use std::process::{Command, ExitStatus, Stdio};
 
 struct Koan {
     name: String,
@@ -37,13 +37,17 @@ impl Into<String> for Koan {
 }
 
 fn main() {
-    let message = if seek_the_path() {
-        "Eternity lies ahead of us, and behind. Your path is not yet finished."
+    let message = if !seek_the_path() {
+        "Eternity lies ahead of us, and behind. Your path is not yet finished. 🍂"
     } else {
-        "What is the sound of one hand clapping (for you)?"
+        if walk_the_path() {
+            "Eternity lies ahead of us, and behind. Your path is not yet finished. 🍂"
+        } else {
+            "What is the sound of one hand clapping (for you)? 🌟"
+        }
     };
 
-    println!("{}", message);
+    println!("\t{}\n", Style::default().italic().paint(message));
 }
 
 macro_rules! koan {
@@ -54,7 +58,7 @@ macro_rules! koan {
 
 fn seek_the_path() -> bool {
     let koans = get_koans();
-    let mut path = OpenOptions::new()
+    let path = OpenOptions::new()
         .read(true)
         .append(true)
         .open("src/path_to_enlightenment.rs")
@@ -63,28 +67,50 @@ fn seek_the_path() -> bool {
 
     print!(" \n\n");
     for koan in koans.iter().take(n_opened_koans) {
-        if !run_tests(Some(&koan.name), false) {
-            println!("\t❌ {}", Red.normal().paint(&koan.name));
-            println!(
-                "\n\t{}",
-                Style::default()
-                    .italic()
-                    .paint("Meditate on your approach and return. Mountains are merely mountains.")
-            );
-            run_tests(Some(&koan.name), true);
-            return false;
-        } else {
-            println!("\t🚀 {}️", Green.normal().paint(&koan.name));
+        let koan_outcome = run_tests(Some(&koan.name));
+        match koan_outcome {
+            TestOutcome::Success => {
+                println!("\t🚀 {}️", Green.normal().paint(&koan.name));
+            }
+            TestOutcome::Failure { details } => {
+                println!(
+                    "\t❌ {}\n\n\t{}\n\n{}",
+                    Red.normal().paint(&koan.name),
+                    Style::default().italic().paint(
+                        "Meditate on your approach and return. Mountains are merely mountains."
+                    ),
+                    Style::default().dimmed().paint(details)
+                );
+                return false;
+            }
         }
     }
+    true
+}
+
+fn walk_the_path() -> bool {
+    let koans = get_koans();
+    let mut path = OpenOptions::new()
+        .read(true)
+        .append(true)
+        .open("src/path_to_enlightenment.rs")
+        .unwrap();
+    let n_opened_koans = BufReader::new(&path).lines().count();
 
     if let Some(next_koan) = koans.into_iter().nth(n_opened_koans) {
-        println!("Ahead of you lies {:?}.", next_koan.name);
+        println!(
+            "{} {}.",
+            Yellow.normal().paint("\n\tAhead of you lies"),
+            Yellow.bold().paint(&next_koan.name)
+        );
         let koan_filename: String = next_koan.into();
         write!(&mut path, "koan!(\"{:}\");\n", koan_filename).unwrap();
         true
     } else {
-        println!("There will be no more tasks.");
+        println!(
+            "{}",
+            Green.normal().paint("\n\tThere will be no more tasks.")
+        );
         false
     }
 }
@@ -100,27 +126,31 @@ fn get_koans() -> Vec<Koan> {
     koans.into_iter().map(|f| f.into()).collect()
 }
 
-fn run_tests(filter: Option<&str>, output: bool) -> bool {
-    let std = || {
-        if output {
-            Stdio::inherit()
-        } else {
-            Stdio::null()
-        }
-    };
+fn run_tests(filter: Option<&str>) -> TestOutcome {
     let mut args = vec!["test", "-q"];
 
     if let Some(test_filter) = filter {
         args.push(test_filter);
     }
 
-    Command::new("cargo")
+    let output = Command::new("cargo")
         .args(args)
-        .stdout(std())
-        .stderr(std())
-        .status()
-        .unwrap()
-        .success()
+        .output()
+        .expect("Failed to run tests");
+
+    let status = output.status;
+
+    if status.success() {
+        TestOutcome::Success
+    } else {
+        let stdout = String::from_utf8_lossy(&output.stdout).to_string();
+        TestOutcome::Failure { details: stdout }
+    }
+}
+
+enum TestOutcome {
+    Success,
+    Failure { details: String },
 }
 
 #[cfg(test)]
