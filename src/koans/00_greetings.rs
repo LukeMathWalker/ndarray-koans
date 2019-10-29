@@ -25,13 +25,15 @@
 ///     - if something is wrong with your test cases, the console output will contain
 ///       the compiler errors or test failures that you should investigate.
 ///
-/// Enjoy!
+/// ~ Enjoy! ~
+///
 #[cfg(test)]
 mod greetings {
     #[test]
     /// This is your starting block!
     ///
     /// In each test, you are expected to replace __ in order to make test pass.
+    ///
     /// Sometimes a one-liner (or a literal value) will be enough.
     /// Sometimes you will have to write a bit more to get the job done.
     ///
