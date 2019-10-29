@@ -15,7 +15,7 @@
 /// But introductions first: how do you get your hands on one of these n-dimensional arrays?
 #[cfg(test)]
 mod constructors {
-    use ndarray::Array;
+    use ndarray::{Array, array};
 
     #[test]
     // Given that `Array` is a generalisation of `Vec`,
@@ -30,5 +30,17 @@ mod constructors {
         // You can index 1-dimensional arrays using the same notation you use for `Vec`
         assert_eq!(ndarray_vector[0], 1);
         assert_eq!(ndarray_vector[2], 7);
+    }
+
+    #[test]
+    // You are not forced to pass through a `Vec` to create an `Array`.
+    //
+    // The `array!` macro follows exactly the same syntax of the `vec!` macro
+    // for 1-dimensional arrays.
+    fn macro_literal() {
+        let from_vector = Array::from(vec![0, 1, 2]);
+        let with_macro = array![__];
+
+        assert_eq!(from_vector, with_macro);
     }
 }
