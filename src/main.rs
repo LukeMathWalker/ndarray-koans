@@ -87,7 +87,8 @@ fn run_tests(filter: Option<&str>) -> TestOutcome {
         TestOutcome::Success
     } else {
         let stdout = String::from_utf8_lossy(&output.stdout).to_string();
-        TestOutcome::Failure { details: stdout }
+        let stderr = String::from_utf8_lossy(&output.stderr).to_string();
+        TestOutcome::Failure { details: [stdout, stderr].concat() }
     }
 }
 
