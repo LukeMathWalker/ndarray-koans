@@ -28,7 +28,7 @@ fn seek_the_path(koans: &KoanCollection) -> bool {
         let koan_outcome = run_tests(Some(&koan.name));
         match koan_outcome {
             TestOutcome::Success => {
-                println!("\t🚀 {}️", Green.normal().paint(&koan.name));
+                println!("\t🚀 {} - {}️", Green.normal().paint(&koan.parent_name), Green.normal().paint(&koan.name));
             }
             TestOutcome::Failure { details } => {
                 println!(
@@ -49,8 +49,9 @@ fn seek_the_path(koans: &KoanCollection) -> bool {
 fn walk_the_path(koans: &mut KoanCollection) -> bool {
     if let Ok(new_koan) = koans.open_next() {
         println!(
-            "{} {}.",
+            "{} {} - {}.",
             Yellow.normal().paint("\n\tAhead of you lies"),
+            Yellow.bold().paint(&new_koan.parent_name),
             Yellow.bold().paint(&new_koan.name)
         );
         true
