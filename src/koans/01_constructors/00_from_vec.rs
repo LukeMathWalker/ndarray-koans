@@ -14,8 +14,8 @@
 ///
 /// But introductions first: how do you get your hands on one of these n-dimensional arrays?
 #[cfg(test)]
-mod constructors {
-    use ndarray::{Array, array};
+mod constructors_from_vec {
+    use ndarray::Array;
 
     #[test]
     // Given that `Array` is a generalisation of `Vec`,
@@ -30,36 +30,5 @@ mod constructors {
         // You can index 1-dimensional arrays using the same notation you use for `Vec`
         assert_eq!(ndarray_vector[0], 1);
         assert_eq!(ndarray_vector[2], 7);
-    }
-
-    #[test]
-    // You are not forced to pass through a `Vec` to create an `Array`.
-    //
-    // The `array!` macro follows exactly the same syntax of the `vec!` macro
-    // for 1-dimensional arrays and gives you directly an `Array` instance.
-    fn macro_literal() {
-        let from_vector = Array::from(vec![0, 1, 2]);
-        let with_macro = array![__];
-
-        assert_eq!(from_vector, with_macro);
-    }
-
-    #[test]
-    // 1-dimensional arrays are cool, but you already knew how to do that with `Vec`.
-    // You can use the `array!` macro to create multi-dimensional arrays as well!
-    fn two_dimensional() {
-        let matrix = array![
-            [0, 1, 2],
-            [3, 4, 5]
-        ];
-
-        // `.ndim()` returns the number of dimensions of an array
-        assert_eq!(matrix.ndim(), __);
-        assert_eq!(matrix.len(), __);
-        // Indexing a multi-dimensional arrays is slightly different:
-        // you need to use square brackets to specify the sequence of indexes
-        // (one for each dimension of your array).
-        assert_eq!(matrix[[1, 2]], __);
-        assert_eq!(matrix[__], 1);
     }
 }
