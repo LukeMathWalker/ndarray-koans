@@ -22,12 +22,6 @@ fn main() {
     println!("\t{}\n", Style::default().italic().paint(message));
 }
 
-macro_rules! koan {
-    ($name:expr) => {
-        include!(concat!("koans/", $name, ".rs"));
-    };
-}
-
 fn seek_the_path(koans: &KoanCollection) -> bool {
     print!(" \n\n");
     for koan in koans.opened() {

@@ -64,7 +64,7 @@ impl KoanCollection {
         let koan = self.next();
         if let Some(koan) = koan {
             let koan_filename: String = koan.into();
-            write!(file, "koan!(\"{:}\");\n", koan_filename).unwrap();
+            write!(file, "include!(\"koans/{:}.rs\");\n", koan_filename).unwrap();
             Ok(koan)
         } else {
             Err(())
