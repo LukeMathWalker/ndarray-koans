@@ -4,7 +4,7 @@
 
 use regex::Regex;
 use std::ffi::OsString;
-use std::fs::{read_dir, OpenOptions};
+use std::fs::{read_dir, FileType, OpenOptions};
 use std::io::{BufRead, BufReader, Write};
 
 pub struct KoanCollection {
@@ -15,10 +15,24 @@ pub struct KoanCollection {
 
 impl KoanCollection {
     pub fn new(path: &str, enlightenment_path: &str) -> Self {
-        let mut koans: Vec<OsString> = read_dir(path)
+        let mut koans: Vec<(OsString, OsString)> = read_dir(path)
             .unwrap()
             .into_iter()
-            .map(|f| f.unwrap().file_name())
+            .map(|f| {
+                let entry = f.unwrap();
+                // Each entry in path has to be a directory!
+                assert!(
+                    entry.file_type().unwrap().is_dir(),
+                    "Each entry in {:} has to be a directory",
+                    path
+                );
+                let directory_name = entry.file_name();
+                read_dir(entry.path())
+                    .unwrap()
+                    .into_iter()
+                    .map(move |f| (directory_name.to_owned(), f.unwrap().file_name()))
+            })
+            .flatten()
             .collect();
         // Sort them in lexicographical order - koans are prefixed with `dd_`
         koans.sort();
@@ -73,26 +87,52 @@ impl KoanCollection {
 }
 
 pub struct Koan {
+    pub parent_name: String,
+    pub parent_number: String,
     pub name: String,
     pub number: usize,
 }
 
-impl From<OsString> for Koan {
-    fn from(filename: OsString) -> Self {
+impl From<(OsString, OsString)> for Koan {
+    fn from(x: (OsString, OsString)) -> Self {
+        let (parent_dir_name, filename) = x;
         let filename = filename.into_string().unwrap();
+        let parent_dir_name = parent_dir_name.into_string().unwrap();
+
         let re = Regex::new(r"(?P<number>\d{2})_(?P<name>\w+)\.rs").unwrap();
-        match re.captures(&filename) {
+        let (name, number) = match re.captures(&filename) {
             None => panic!("Failed to parse koan name."),
-            Some(s) => Koan {
-                name: s["name"].into(),
-                number: s["number"].parse().unwrap(),
-            },
+            Some(s) => {
+                let name = s["name"].into();
+                let number = s["number"].parse().unwrap();
+                (name, number)
+            }
+        };
+
+        let re = Regex::new(r"(?P<number>\d{2})_(?P<name>\w+)").unwrap();
+        let (parent_name, parent_number) = match re.captures(&parent_dir_name) {
+            None => panic!("Failed to parse dir name."),
+            Some(s) => {
+                let name = s["name"].into();
+                let number = s["number"].parse().unwrap();
+                (name, number)
+            }
+        };
+
+        Koan {
+            parent_name,
+            parent_number,
+            name,
+            number,
         }
     }
 }
 
 impl Into<String> for &Koan {
     fn into(self) -> String {
-        format!("{:02}_{}", &self.number, &self.name)
+        format!(
+            "{:02}_{}/{:02}_{}",
+            &self.parent_number, &self.parent_name, &self.number, &self.name
+        )
     }
 }
