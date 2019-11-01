@@ -10,7 +10,7 @@ mod constructors_random {
     // Let's give it a spin!
 
     use ndarray::Array;
-    // Use statement to get extensions traits in scope (`QuantileExt` for `min`/`max` and
+    // Use statements to get extensions traits in scope (`QuantileExt` for `min`/`max` and
     // `RandomExt` for random array generation)
     use ndarray_stats::QuantileExt;
     use ndarray_rand::RandomExt;
