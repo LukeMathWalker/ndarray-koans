@@ -17,11 +17,11 @@
 /// - know enough about `ndarray` and its ecosystem to go on and have fun with it!
 ///
 /// **Practicalities**:
-/// - each koan is a file in the `koans` folder;
-/// - each file contains a test module with several tests inside it;
+/// - each koan is a sub-folder in the `koans` folder;
+/// - each folder contains multiple test files with a single test in each of it;
 /// - you can move along your journey with `cargo run`:
-///     - if you have filled in correctly all tests in a koan (or you just started)
-///       the console output will tell the name of the next koan you should get started with;
+///     - if you have filled in correctly a test (or you just started)
+///       the console output will tell the name of the next one you should get started with;
 ///     - if something is wrong with your test cases, the console output will contain
 ///       the compiler errors or test failures that you should investigate.
 ///
