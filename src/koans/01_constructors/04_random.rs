@@ -3,7 +3,7 @@ mod constructors_random {
     // Quite often (especially for testing purposes) you'd like to generate an array
     // filled with random values: that's where `ndarray_rand` comes in!
     //
-    // `ndarray-rand` combined `ndarray` and the `rand` crate.
+    // `ndarray-rand` combines `ndarray` and the `rand` crate.
     // It exports `RandomExt`, an extension trait that provides additional methods
     // to generate random `Array`s - it just needs to be in scope.
     //
@@ -14,7 +14,7 @@ mod constructors_random {
     // `RandomExt` for random array generation)
     use ndarray_stats::QuantileExt;
     use ndarray_rand::RandomExt;
-    // `ndarray_rand` re-exports `rand` and `rand_distr` as submodules.
+    // `ndarray_rand` re-exports the `rand` and the `rand_distr` crates as submodules.
     use ndarray_rand::rand_distr::Uniform;
 
     #[test]
