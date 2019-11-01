@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod constructors_three_dimensional {
-    use ndarray::{Array, array};
+    use ndarray::array;
 
     #[test]
     fn three_dimensional() {

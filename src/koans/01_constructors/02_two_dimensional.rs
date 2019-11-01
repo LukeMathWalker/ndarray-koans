@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod constructors_two_dimensional {
-    use ndarray::{Array, array};
+    use ndarray::array;
 
     #[test]
     // 1-dimensional arrays are cool, but you already knew how to do that with `Vec`.
