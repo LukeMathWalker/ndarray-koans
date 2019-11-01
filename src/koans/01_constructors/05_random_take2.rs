@@ -10,7 +10,7 @@ mod constructors_random_take2 {
     fn random() {
         // So far we have always trusted the compiler to infer the right element type for our
         // arrays based on our usage of them.
-        // What if you wanted to be explicit and specify the element type?
+        // What if we wanted to be explicit and specify the element type?
         //
         // That's indeed possible, but we need to look a bit closer at how `Array` works.
         //
