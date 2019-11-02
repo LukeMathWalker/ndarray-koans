@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod cluster_generation_smoke_check {
     use ndarray::{Array, Axis, Array2, Ix2};
+    // Let's import our generation function from the previous test module
     use super::cluster_generation_as_a_function::generate_cluster;
     use ndarray_npy::{read_npy, write_npy};
 
@@ -20,7 +21,7 @@ mod cluster_generation_smoke_check {
     ///
     /// You can find a plug-and-play Jupyter notebook in the `python` folder - give it a go!
     fn smoke_check() {
-        let a: Array2<f64> = generate_cluster(1000, 2);
+        let a: Array2<f64> = generate_cluster(__, 2);
         let filename = "cluster_smoke_check.npy";
 
         write_npy(__, __).expect("Failed to write array in npy format.");
