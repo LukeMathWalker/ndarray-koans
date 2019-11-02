@@ -62,8 +62,8 @@ mod cluster_generation_origin {
         // according to the traits defined in the `approx` crate:
         // `assert_abs_diff_eq` checks that absolute difference between each element
         // in the two arrays is smaller than the specified `epsilon`.
-        assert_abs_diff_eq!(a.mean_axis(Axis(0)).unwrap(), array![0., 0.], epsilon = 0.1);
-        assert_abs_diff_eq!(a.var_axis(Axis(0), 1.), array![1., 1.], epsilon = 0.1);
+        assert_abs_diff_eq!(centroid, array![0., 0.], epsilon = 0.1);
+        assert_abs_diff_eq!(variance, array![1., 1.], epsilon = 0.1);
 
         // (Yes, we are randomly generating `a`, hence this test is not fully deterministic,
         //  but you'd have to be quite unlucky to see it fail. I cut myself some slack here.)

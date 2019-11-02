@@ -28,7 +28,11 @@ fn seek_the_path(koans: &KoanCollection) -> bool {
         let koan_outcome = run_tests(Some(&koan.name));
         match koan_outcome {
             TestOutcome::Success => {
-                println!("\t🚀 {} - {}️", Green.normal().paint(&koan.parent_name), Green.normal().paint(&koan.name));
+                println!(
+                    "\t🚀 {} - {}️",
+                    Green.normal().paint(&koan.parent_name),
+                    Green.normal().paint(&koan.name)
+                );
             }
             TestOutcome::Failure { details } => {
                 println!(
