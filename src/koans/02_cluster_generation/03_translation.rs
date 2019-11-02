@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod cluster_generation_translation {
-    use ndarray::{Array, Array2, Array1, array, Ix2, Axis};
+    use ndarray::{Array, Array2, Array1, array, Ix2, Axis, ArrayView1};
     use ndarray_rand::RandomExt;
     use ndarray_rand::rand_distr::StandardNormal;
     use approx::assert_abs_diff_eq;
@@ -8,8 +8,7 @@ mod cluster_generation_translation {
     pub fn generate_cluster(n_observations: usize, centroid: Array1<f64>) -> Array2<f64> {
         let n_features = centroid.dim();
         let origin_cluster: Array2<f64> = Array::random((n_observations, n_features), StandardNormal);
-        let centroid_2d = centroid.into_shape((1, n_features)).unwrap();
-        origin_cluster + centroid_2d
+        origin_cluster + centroid.broadcast((n_observations, n_features)).unwrap()
     }
 
     #[test]
