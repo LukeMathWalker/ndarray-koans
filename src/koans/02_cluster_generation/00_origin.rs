@@ -9,10 +9,10 @@
 /// ```
 ///
 /// K-means is quite a popular algorithm when it comes to clustering: it tries to
-/// partition observations into `k` clusters (`k`-means) in order to minimise the mutual
+/// partition observations into `k` clusters (`k`-means) minimising the mutual
 /// distance of observations belonging to the same cluster.
 ///
-/// In mathematical terms, it tries to minimise:
+/// In mathematical terms, it tries to minimise this loss function:
 ///
 ///  k     1
 ///  Σ   ―――――     Σ    ‖x-y‖²
@@ -21,7 +21,7 @@
 ///
 /// where `S_i` is one of the `k` clusters, `x` and `y` are observations in the `S_i` cluster.
 /// Check https://en.wikipedia.org/wiki/K-means_clustering#Description if you don't like
-/// unicode math formulas.
+/// unicode math formulas (rightly so).
 ///
 #[cfg(test)]
 mod cluster_generation_origin {
@@ -38,9 +38,34 @@ mod cluster_generation_origin {
     /// a bunch of 2-dimensional observations, normally distributed around the origin, (0, 0).
     fn origin_cluster() {
         let n_observations = 10000;
-        let a = Array::random((n_observations, 2), StandardNormal);
+        let n_features = 2;
+        let a = Array::random((n_observations, n_features), __);
 
+        // The mean point of a cluster is called `centroid`.
+        // We'll use this term again when implementing the actual K-means algorithm.
+        let centroid = a.mean_axis(Axis(0)).unwrap();
+        let variance = a.var_axis(Axis(0), 1.);
+
+
+        // Both `mean_axis` and `var_axis` reduce the dimensionality of the array:
+        // they compute the mean and the variance along the specified axis and return a
+        // new array with one less dimension (the axis you specified for reduction is removed).
+        assert_eq!(centroid.ndim(), __);
+        assert_eq!(variance.ndim(), __);
+        assert_eq!(centroid.dim(), __);
+        assert_eq!(variance.dim(), __);
+
+        // When dealing with floats, it's not a good idea to use equality checks:
+        // rounding errors affect the precision of the result, making strict equality
+        // quite flaky.
+        // `ndarray` provides an `approx` feature-flag to bring approximate comparisons
+        // according to the traits defined in the `approx` crate:
+        // `assert_abs_diff_eq` checks that absolute difference between each element
+        // in the two arrays is smaller than the specified `epsilon`.
         assert_abs_diff_eq!(a.mean_axis(Axis(0)).unwrap(), array![0., 0.], epsilon = 0.1);
         assert_abs_diff_eq!(a.var_axis(Axis(0), 1.), array![1., 1.], epsilon = 0.1);
+
+        // (Yes, we are randomly generating `a`, hence this test is not fully deterministic,
+        //  but you'd have to be quite unlucky to see it fail. I cut myself some slack here.)
     }
 }
