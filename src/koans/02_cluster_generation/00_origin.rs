@@ -30,12 +30,13 @@ mod cluster_generation_origin {
     use ndarray_rand::rand_distr::StandardNormal;
     use approx::assert_abs_diff_eq;
 
-    #[test]
     /// Our first step in our K-means implementation journey is data generation!
     ///
     /// To spot clusters, you need to have some data first.
-    /// Using what we learned in the `constructors` koan, let's try to generate
-    /// a bunch of 2-dimensional observations, normally distributed around the origin, (0, 0).
+    /// Using what we learned in the `constructors` koan, try to generate a matrix of observations:
+    /// one row for each data point.
+    /// We want our observations to be normally distributed around the origin, the 0 vector.
+    #[test]
     fn origin_cluster() {
         let n_observations = 10000;
         let n_features = 2;
