@@ -1,9 +1,7 @@
 #[cfg(test)]
 mod cluster_generation_as_a_function {
-    use ndarray::{array, Array, Axis, Array2, Ix2};
+    use ndarray::{Array, Array2, Ix2};
     use ndarray_rand::RandomExt;
-    use ndarray_rand::rand_distr::StandardNormal;
-    use approx::assert_abs_diff_eq;
 
     /// Let's isolate the code required to generate a cluster in a proper function,
     /// so that we can call it again from other tests.
@@ -22,15 +20,15 @@ mod cluster_generation_as_a_function {
     /// for `Array<f64, T>`.
     /// As you can imagine, you can use `Array1`, `Array3`, etc. to work with a different number
     /// of dimensions.
-    fn generate_cluster(n_observations: usize, n_features: usize) -> Array2<__> {
+    pub fn generate_cluster(n_observations: usize, n_features: usize) -> Array2<__> {
         Array::random((n_observations, n_features), __)
     }
 
     #[test]
     fn as_a_function() {
         let n_observations = 10000;
-        let a: Array2<f64> = generate_cluster(n_observations, __);
-        let b: Array<f64, Ix2> = generate_cluster(n_observations, __);
+        let a: Array2<f64> = generate_cluster(n_observations, 2);
+        let b: Array<f64, Ix2> = generate_cluster(n_observations, 3);
 
         assert_eq!(a.ndim(), b.ndim())
     }

@@ -21,3 +21,5 @@ Cargo.lock
 src/path_to_enlightenment.rs
 
 .idea
+*.npy
+.ipynb_checkpoints/
