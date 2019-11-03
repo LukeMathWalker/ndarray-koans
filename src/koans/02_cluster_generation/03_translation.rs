@@ -49,7 +49,7 @@ mod cluster_generation_translation {
         let centroid = array![10., 10.];
         let a: Array2<f64> = generate_cluster(n_observations, centroid.clone());
 
-        let inferred_centroid = a.mean_axis(Axis(0)).unwrap();
+        let inferred_centroid = a.mean_axis(Axis(0)).expect("Failed to compute the mean.");
         let inferred_variance = a.var_axis(Axis(0), 1.);
 
         assert_abs_diff_eq!(inferred_centroid, centroid, epsilon = 0.1);

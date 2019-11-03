@@ -43,7 +43,9 @@ mod cluster_generation_origin {
 
         // The mean point of a cluster is called `centroid`.
         // We'll use this term again when implementing the actual K-means algorithm.
-        let centroid = a.mean_axis(Axis(0)).unwrap();
+        // `mean_axis` can return `None` if the axis we are reducing has length 0
+        // (not our case here, we can safely use `expect` or `unwrap` to get the value).
+        let centroid = a.mean_axis(Axis(0)).expect("Failed to computer mean.");
         let variance = a.var_axis(Axis(0), 1.);
 
 
