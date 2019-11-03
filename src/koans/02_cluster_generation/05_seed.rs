@@ -39,11 +39,11 @@ mod cluster_generation_seed {
         ///
         /// We can use `Isaac64Rng` as our seedable generator (from the `rand_isaac` crate).
         let seed = 42;
-        let mut first_rng = Isaac64Rng::seed_from_u64(seed);
-        let mut second_rng = Isaac64Rng::seed_from_u64(seed);
+        let mut first_rng = Isaac64Rng::seed_from_u64(__);
+        let mut second_rng = Isaac64Rng::seed_from_u64(__);
 
-        let a: Array2<f64> = generate_cluster(n, centroid.view(), &mut first_rng);
-        let b: Array2<f64> = generate_cluster(n, centroid.view(), &mut second_rng);
+        let a: Array2<f64> = generate_cluster(n, centroid.view(), __);
+        let b: Array2<f64> = generate_cluster(n, centroid.view(), __);
 
         // Will it work?
         assert_eq!(a, b);

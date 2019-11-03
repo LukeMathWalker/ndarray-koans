@@ -19,7 +19,8 @@ mod cluster_generation_smoke_check {
     /// Rust is still quite immature when it comes to plotting, so we'll save our array in `npy`
     /// format and leverage Python to do some plotting.
     ///
-    /// You can find a plug-and-play Jupyter notebook in the `python` folder - give it a go!
+    /// You can find a plug-and-play "Cluster generation" Jupyter notebook in the `python` folder,
+    /// give it a go!
     fn smoke_check() {
         let a: Array2<f64> = generate_cluster(__, 2);
         let filename = "cluster_smoke_check.npy";

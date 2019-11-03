@@ -55,7 +55,7 @@ mod cluster_generation_translation {
         assert_abs_diff_eq!(inferred_centroid, centroid, epsilon = 0.1);
         assert_abs_diff_eq!(inferred_variance, array![1., 1.], epsilon = 0.1);
 
-        // Use the `Cluster generation - smoke check` notebook to verify that the generated
+        // Use the `Cluster generation` notebook to verify that the generated
         // cluster looks like we expect it to look!
         let filename = "translated_cluster_smoke_check.npy";
         write_npy(filename, a).expect("Failed to write array in npy format.");
