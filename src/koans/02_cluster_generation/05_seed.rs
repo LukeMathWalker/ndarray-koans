@@ -32,19 +32,19 @@ mod cluster_generation_seed {
         ///
         /// It's a huge topic on its own, but the first **fundamental** step is making sure
         /// that the behaviour of our source of randomness is reproducible - we need to
-        /// **seed** our random number generator ("rng", if you get close to each other).
+        /// **seed** our random number generator ("rng", if you get to know each other by first name).
         ///
         /// Now, our random numbers are not **truly** random - they are pseudo-random.
         /// A pseudo-random number generator returns a sequence of values that is deterministically
         /// computed from an initial value, called **seed**.
         ///
         /// If we initialise two copies of the same pseudo random number generator
-        /// using the **same** seed they should generate the same sequence of random numbers!
+        /// using the **same** seed they should yield the same sequence of random numbers!
         ///
         /// Any random number generator that implements the `SeedableRng` trait provides
         /// a method that takes a seed as argument and returns a seeded rng.
         ///
-        /// We can use `Isaac64Rng` as our seedable generator (from the `rand_isaac` crate).
+        /// We can use `Isaac64Rng` as our seedable rng (from the `rand_isaac` crate).
         let seed = 42;
         let mut first_rng = Isaac64Rng::seed_from_u64(__);
         let mut second_rng = Isaac64Rng::seed_from_u64(__);

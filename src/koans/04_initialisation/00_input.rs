@@ -6,11 +6,11 @@ mod initialisation_input {
     use ndarray_rand::RandomExt;
     use rand_isaac::Isaac64Rng;
 
-    // K-means, as the name says, requires you to declare upfront `k`: the number of clusters you are
+    // K-means, as the name says, requires you to declare `k` upfront: the number of clusters you are
     // looking to spot in your dataset (quite a strong assumption to make, I agree).
     //
     // When implementing the standard K-means algorithm, the most common initialisation
-    // technique is the Forgy method: as your first set of centroids, just pick `n_clusters`
+    // technique is the Forgy method: as your first set of centroids just pick `n_clusters`
     // distinct observations from your dataset - as simple as that (and it works quite well!).
     pub fn get_random_centroids(
         n_clusters: usize,

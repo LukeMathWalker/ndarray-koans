@@ -11,6 +11,7 @@
 /// K-means is quite a popular algorithm when it comes to clustering: it tries to
 /// partition observations into `k` clusters (`k`-means) minimising the mutual
 /// distance of observations belonging to the same cluster.
+/// If each observation is a numerical vector, the distance is usually the euclidean distance.
 ///
 /// In mathematical terms, it tries to minimise this loss function:
 ///

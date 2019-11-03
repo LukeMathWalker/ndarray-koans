@@ -7,7 +7,7 @@ mod initialisation_array_base {
     use ndarray_rand::RandomExt;
     use rand_isaac::Isaac64Rng;
 
-    /// [!!! Deep-dive warning !!!]
+    /// [!!! Deep-dive warning - brace yourselves !!!]
     ///
     /// So far we have met three different n-dimensional array types:
     /// - `Array<A, D>`, the equivalent of `Vec<A>`. An n-dimensional array that owns its data;
