@@ -21,11 +21,11 @@
 /// We'll tackle each of these steps, one at a time, and then we'll assemble our overall
 /// K-means routine combining each of the sub-pieces.
 #[cfg(test)]
-mod k_means_the_plan {
+mod interlude_the_plan {
     #[test]
     fn the_plan() {
-        let i_am_ready_to_start = __;
+        let i_am_ready_to_cluster_things = __;
 
-        assert!(i_am_ready_to_start);
+        assert!(i_am_ready_to_cluster_things);
     }
 }
