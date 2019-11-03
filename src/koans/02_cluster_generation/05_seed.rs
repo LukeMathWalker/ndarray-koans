@@ -1,15 +1,22 @@
 #[cfg(test)]
 mod cluster_generation_seed {
-    use ndarray::{Array2, array, ArrayView1, Array};
-    use rand_isaac::Isaac64Rng;
-    use ndarray_rand::RandomExt;
-    use ndarray_rand::rand::{SeedableRng, Rng};
+    use ndarray::{array, Array, Array2, ArrayView1};
+    use ndarray_rand::rand::{Rng, SeedableRng};
     use ndarray_rand::rand_distr::StandardNormal;
+    use ndarray_rand::RandomExt;
+    use rand_isaac::Isaac64Rng;
 
-    pub fn generate_cluster(n_observations: usize, centroid: ArrayView1<f64>, rng: &mut impl Rng) -> Array2<f64> {
+    pub fn generate_cluster(
+        n_observations: usize,
+        centroid: ArrayView1<f64>,
+        rng: &mut impl Rng,
+    ) -> Array2<f64> {
         // `random_using` allows us to specify the random number generator we wish to use
         let origin_cluster: Array2<f64> = Array::random_using(__);
-        origin_cluster + centroid.broadcast((n_observations, n_features)).expect("Failed to broadcast")
+        let translation = centroid
+            .broadcast((n_observations, n_features))
+            .expect("Failed to broadcast");
+        origin_cluster + translation
     }
 
     #[test]

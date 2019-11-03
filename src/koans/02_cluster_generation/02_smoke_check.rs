@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod cluster_generation_smoke_check {
-    use ndarray::{Array2};
+    use ndarray::Array2;
     // Let's import our generation function from the previous test module
     use super::cluster_generation_as_a_function::generate_cluster;
     use ndarray_npy::{read_npy, write_npy};

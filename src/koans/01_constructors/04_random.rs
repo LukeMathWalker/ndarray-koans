@@ -12,8 +12,8 @@ mod constructors_random {
     use ndarray::Array;
     // Use statements to get extensions traits in scope (`QuantileExt` for `min`/`max` and
     // `RandomExt` for random array generation)
-    use ndarray_stats::QuantileExt;
     use ndarray_rand::RandomExt;
+    use ndarray_stats::QuantileExt;
     // `ndarray_rand` re-exports the `rand` and the `rand_distr` crates as submodules.
     use ndarray_rand::rand_distr::Uniform;
 

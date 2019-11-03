@@ -6,10 +6,7 @@ mod constructors_two_dimensional {
     // 1-dimensional arrays are cool, but you already knew how to do that with `Vec`.
     // You can use the `array!` macro to create multi-dimensional arrays as well!
     fn two_dimensional() {
-        let matrix = array![
-            [0, 1, 2],
-            [3, 4, 5]
-        ];
+        let matrix = array![[0, 1, 2], [3, 4, 5]];
 
         // `.ndim()` returns the number of dimensions of an array
         assert_eq!(matrix.ndim(), __);

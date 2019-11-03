@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod constructors_random_take2 {
     use ndarray::Array;
-    use ndarray_stats::QuantileExt;
-    use ndarray_rand::RandomExt;
     use ndarray_rand::rand_distr::Uniform;
+    use ndarray_rand::RandomExt;
+    use ndarray_stats::QuantileExt;
     use std::any::Any;
 
     #[test]

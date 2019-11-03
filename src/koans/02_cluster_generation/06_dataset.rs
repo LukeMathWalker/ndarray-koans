@@ -1,13 +1,17 @@
 #[cfg(test)]
 mod cluster_generation_dataset {
-    use ndarray::{Array2, array, ArrayView1, Array, ArrayView2, stack, Axis, s};
-    use rand_isaac::Isaac64Rng;
-    use ndarray_rand::RandomExt;
-    use ndarray_rand::rand::{SeedableRng, Rng};
-    use ndarray_rand::rand_distr::StandardNormal;
+    use ndarray::{array, s, stack, Array, Array2, ArrayView1, ArrayView2, Axis};
     use ndarray_npy::write_npy;
+    use ndarray_rand::rand::{Rng, SeedableRng};
+    use ndarray_rand::rand_distr::StandardNormal;
+    use ndarray_rand::RandomExt;
+    use rand_isaac::Isaac64Rng;
 
-    pub fn generate_dataset(cluster_size: usize, centroids: ArrayView2<f64>, rng: &mut impl Rng) -> Array2<f64> {
+    pub fn generate_dataset(
+        cluster_size: usize,
+        centroids: ArrayView2<f64>,
+        rng: &mut impl Rng,
+    ) -> Array2<f64> {
         // Let's allocate an array of the right shape to store the final dataset.
         // We will then progressively replace these zeros with the observations in each generated
         // cluster.
@@ -43,7 +47,11 @@ mod cluster_generation_dataset {
         dataset
     }
 
-    pub fn generate_cluster(n_observations: usize, centroid: ArrayView1<f64>, rng: &mut impl Rng) -> Array2<f64> {
+    pub fn generate_cluster(
+        n_observations: usize,
+        centroid: ArrayView1<f64>,
+        rng: &mut impl Rng,
+    ) -> Array2<f64> {
         let shape = (n_observations, centroid.len());
         let origin_cluster: Array2<f64> = Array::random_using(shape, StandardNormal, rng);
         origin_cluster + centroid.broadcast(shape).expect("Failed to broadcast")
@@ -65,18 +73,16 @@ mod cluster_generation_dataset {
         // track the **shape** of our arrays at compile-time.
         // `array![0, 1]` and `array![0, 1, 2]` are both of type `Array1` but they have different
         // shapes, `(2,) != `(3,)`.
-        let centroids = array![
-            [10., 10.],
-            [1., 12.],
-            [20., 30.],
-            [-20., 30.],
-        ];
+        let centroids = array![[10., 10.], [1., 12.], [20., 30.], [-20., 30.],];
         let n = 1000;
 
         let mut rng = Isaac64Rng::seed_from_u64(42);
         let dataset = generate_dataset(n, centroids.view(), &mut rng);
 
-        assert_eq!(dataset.dim(), (centroids.shape()[0] * n, centroids.shape()[1]));
+        assert_eq!(
+            dataset.dim(),
+            (centroids.shape()[0] * n, centroids.shape()[1])
+        );
         // There is a negligible (tiny but greater than zero) probability that our random number
         // generator genuinely spits out (0, 0).
         // But, being pragmatic, it's safe enough to assume that this assertion will only fail

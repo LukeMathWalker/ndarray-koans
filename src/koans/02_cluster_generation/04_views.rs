@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod cluster_generation_views {
-    use ndarray::{Array2, array, Axis, ArrayView1};
     use approx::assert_abs_diff_eq;
+    use ndarray::{array, Array2, ArrayView1, Axis};
 
     /// Let's go for a second (or third?) take on cluster generation.
     ///

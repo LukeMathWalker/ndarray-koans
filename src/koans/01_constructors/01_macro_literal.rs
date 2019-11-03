@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod constructors_macro_literal {
-    use ndarray::{Array, array};
+    use ndarray::{array, Array};
 
     #[test]
     // You are not forced to pass through a `Vec` to create an `Array`.

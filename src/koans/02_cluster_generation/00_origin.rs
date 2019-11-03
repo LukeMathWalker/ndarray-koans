@@ -25,9 +25,9 @@
 ///
 #[cfg(test)]
 mod cluster_generation_origin {
+    use approx::assert_abs_diff_eq;
     use ndarray::{Array, Axis};
     use ndarray_rand::RandomExt;
-    use approx::assert_abs_diff_eq;
 
     /// Our first step in our K-means implementation journey is data generation!
     ///
@@ -47,7 +47,6 @@ mod cluster_generation_origin {
         // (not our case here, we can safely use `expect` or `unwrap` to get the value).
         let centroid = a.mean_axis(Axis(0)).expect("Failed to computer mean.");
         let variance = a.var_axis(Axis(0), 1.);
-
 
         // Both `mean_axis` and `var_axis` reduce the dimensionality of the array:
         // they compute the mean and the variance along the specified axis and return a

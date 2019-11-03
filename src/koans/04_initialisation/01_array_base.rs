@@ -1,6 +1,6 @@
 #[cfg(test)]
-mod initialisation_input {
-    use ndarray::{Array, Array2, ArrayView1};
+mod initialisation_array_base {
+    use ndarray::{Array, Array2, ArrayBase, ArrayView1, Data, Ix2};
     use ndarray_rand::rand::{Rng, SeedableRng};
     use ndarray_rand::rand_distr::StandardNormal;
     use ndarray_rand::RandomExt;
@@ -14,20 +14,14 @@ mod initialisation_input {
     // distinct observations from your dataset - as simple as that (and it works quite well!).
     pub fn get_random_centroids(
         n_clusters: usize,
-        observations: __,
+        observations: &ArrayBase<impl Data<f64>, Ix2>,
         rng: &mut impl Rng,
     ) -> Array2<f64> {
-        __
-    }
-
-    // Helper function.
-    // Check if there is at least one row in `matrix` that is equal to `row`
-    fn is_row_of(matrix: &Array2<f64>, row: &ArrayView1<f64>) -> bool {
-        matrix.genrows().into_iter().any(|r| &r == row)
+        unimplemented!()
     }
 
     #[test]
-    fn input() {
+    fn array_base() {
         let mut rng = Isaac64Rng::seed_from_u64(42);
         let n_observations = 50;
         let n_clusters = 3;
@@ -42,20 +36,5 @@ mod initialisation_input {
             .genrows()
             .into_iter()
             .all(|centroid| is_row_of(&observations, &centroid)));
-    }
-
-    #[test]
-    #[should_panic]
-    // If the number of clusters we are looking for is bigger than the number of
-    // available observations `get_random_centroids` should panic
-    fn invalid_input() {
-        let mut rng = Isaac64Rng::seed_from_u64(42);
-        let n_observations = 4;
-        let n_clusters = 5;
-        assert!(n_observations < n_clusters);
-        let observations: Array2<f64> =
-            Array::random_using((n_observations, n_clusters), StandardNormal, &mut rng);
-
-        get_random_centroids(n_clusters, observations.view(), &mut rng);
     }
 }
