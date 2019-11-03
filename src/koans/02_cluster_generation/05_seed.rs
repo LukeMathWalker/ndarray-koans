@@ -38,7 +38,7 @@ mod cluster_generation_seed {
         /// a method that takes a seed as argument and returns a seeded rng.
         ///
         /// We can use `Isaac64Rng` as our seedable generator (from the `rand_isaac` crate).
-        let seed = 10;
+        let seed = 42;
         let mut first_rng = Isaac64Rng::seed_from_u64(seed);
         let mut second_rng = Isaac64Rng::seed_from_u64(seed);
 
