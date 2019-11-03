@@ -6,9 +6,12 @@
 /// K-means is an iterative algorithm: it progressively refines its choice of centroids.
 /// (Quick remainder: centroid = mean of the points in a cluster)
 /// It's guaranteed to converge, even though it might not find the optimal set of centroids
-/// (unfortunately it can get stuck in a local minimum).
+/// (unfortunately it can get stuck in a local minimum, finding the optimal minimum if NP-hard!).
 ///
-/// There are three steps in the K-means algorithm:
+/// We will implement the standard K-means algorithm, also known as Lloyd's algorithm or
+/// naive K-means.
+///
+/// There are three steps in the algorithm:
 /// - initialisation step: how do we choose our initial set of centroids?
 /// - assignment step: assign each observation to the nearest cluster
 ///                    (minimum distance between the observation and the cluster's centroid);
