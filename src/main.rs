@@ -9,14 +9,10 @@ use std::process::{Command, ExitStatus, Stdio};
 
 fn main() {
     let mut koans = KoanCollection::new("src/koans", "src/path_to_enlightenment.rs");
-    let message = if !seek_the_path(&koans) {
+    let message = if !seek_the_path(&koans) || walk_the_path(&mut koans) {
         "Eternity lies ahead of us, and behind. Your path is not yet finished. 🍂"
     } else {
-        if walk_the_path(&mut koans) {
-            "Eternity lies ahead of us, and behind. Your path is not yet finished. 🍂"
-        } else {
-            "What is the sound of one hand clapping (for you)? 🌟"
-        }
+        "What is the sound of one hand clapping (for you)? 🌟"
     };
 
     println!("\t{}\n", Style::default().italic().paint(message));

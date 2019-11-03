@@ -17,7 +17,6 @@ impl KoanCollection {
     pub fn new(path: &str, enlightenment_path: &str) -> Self {
         let mut koans: Vec<(OsString, OsString)> = read_dir(path)
             .unwrap()
-            .into_iter()
             .map(|f| {
                 let entry = f.unwrap();
                 // Each entry in path has to be a directory!
@@ -29,7 +28,6 @@ impl KoanCollection {
                 let directory_name = entry.file_name();
                 read_dir(entry.path())
                     .unwrap()
-                    .into_iter()
                     .map(move |f| (directory_name.to_owned(), f.unwrap().file_name()))
             })
             .flatten()
@@ -50,8 +48,7 @@ impl KoanCollection {
             .append(true)
             .open(&self.enlightenment_path)
             .unwrap();
-        let n_opened_koans = BufReader::new(&file).lines().count();
-        n_opened_koans
+        BufReader::new(&file).lines().count()
     }
 
     pub fn opened(&self) -> impl Iterator<Item = &Koan> {
@@ -78,7 +75,7 @@ impl KoanCollection {
         let koan = self.next();
         if let Some(koan) = koan {
             let koan_filename: String = koan.into();
-            write!(file, "include!(\"koans/{:}.rs\");\n", koan_filename).unwrap();
+            writeln!(file, "include!(\"koans/{:}.rs\");", koan_filename).unwrap();
             Ok(koan)
         } else {
             Err(())

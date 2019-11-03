@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod cluster_generation_translation {
-    use ndarray::{Array, Array2, Array1, array, Ix2, Axis, ArrayView1};
+    use ndarray::{Array, Array2, Array1, array, Axis};
     use ndarray_rand::RandomExt;
     use ndarray_rand::rand_distr::StandardNormal;
     use approx::assert_abs_diff_eq;
@@ -44,7 +44,7 @@ mod cluster_generation_translation {
     }
 
     #[test]
-    fn as_a_function() {
+    fn translation() {
         let n_observations = 10000;
         let centroid = array![10., 10.];
         let a: Array2<f64> = generate_cluster(n_observations, centroid.clone());
