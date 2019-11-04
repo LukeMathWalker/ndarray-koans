@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod assignment_distance {
-    use ndarray::{array, Array, Array1, Zip};
+    use ndarray::{array, Array, Array1};
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
     use approx::assert_abs_diff_eq;
