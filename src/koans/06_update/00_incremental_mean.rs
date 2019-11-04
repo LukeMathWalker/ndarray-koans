@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod update_incremental_mean {
     use approx::assert_abs_diff_eq;
-    use ndarray::{Axis, array, Array, Array1, Array2, ArrayBase, Data, Ix1};
+    use ndarray::{array, Array, Array1, Array2, ArrayBase, Axis, Data, Ix1};
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
 
@@ -33,7 +33,7 @@ mod update_incremental_mean {
     /// a derivation (and a nicely formatted formula).
     ///
     /// To do this successfully, we need to keep track of:
-    /// - the current mean (`old_mean`);
+    /// - the current mean (`current_mean`);
     /// - the number of observations we have seen so far (`n`).
     ///
     /// We can store this information in a struct:
