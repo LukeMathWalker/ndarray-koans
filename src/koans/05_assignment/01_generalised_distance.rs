@@ -7,12 +7,9 @@ mod assignment_generalised_distance {
     /// To maximise the flexibility of this function's API, let's change the signature to make
     /// sure that we can call `euclidean_distance` using references to `Array`s, `ArrayView`s,
     /// `ArrayViewMut`s... or a combination of those!
-    pub fn euclidean_distance<__>(
-        a: &__,
-        b: &__,
-    ) -> f64
+    pub fn euclidean_distance<__>(a: &__, b: &__) -> f64
     where
-        __: __
+        __: __,
     {
         // You can probably copy-paste the body you just wrote in the previous exercise
         // If you are unlucky you might have to do some minor adjustments

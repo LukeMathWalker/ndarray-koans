@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod assignment_distance {
+    use approx::assert_abs_diff_eq;
     use ndarray::{array, Array, Array1};
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
-    use approx::assert_abs_diff_eq;
 
     /// The assignment step in the K-means algorithm requires us to find the closest centroid
     /// to each observation.
@@ -17,10 +17,7 @@ mod assignment_distance {
     /// where `a` and `b` are n-dimensional vectors.
     ///
     /// Reference: https://en.wikipedia.org/wiki/Euclidean_distance
-    pub fn euclidean_distance(
-        a: &Array1<f64>,
-        b: &Array1<f64>,
-    ) -> f64 {
+    pub fn euclidean_distance(a: &Array1<f64>, b: &Array1<f64>) -> f64 {
         // No hints this time, just a bunch of tests - go ahead!
         __
     }
@@ -41,7 +38,11 @@ mod assignment_distance {
         let a: Array1<f64> = Array::random(n_features, Uniform::new(-100., 100.));
         let b: Array1<f64> = Array::random(n_features, Uniform::new(-100., 100.));
 
-        assert_abs_diff_eq!(euclidean_distance(&a, &b), euclidean_distance(&b, &a), epsilon = 1e-5)
+        assert_abs_diff_eq!(
+            euclidean_distance(&a, &b),
+            euclidean_distance(&b, &a),
+            epsilon = 1e-5
+        )
     }
 
     #[test]

@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod initialisation_array_base {
-    use ndarray::{array, Array, Array2, ArrayBase, ArrayView1, Data, Ix1, Ix2, Axis, DataMut};
+    use ndarray::{array, Array, Array2, ArrayBase, ArrayView1, Axis, Data, DataMut, Ix1, Ix2};
     use ndarray_rand::rand;
     use ndarray_rand::rand::{Rng, SeedableRng};
     use ndarray_rand::rand_distr::StandardNormal;
@@ -73,7 +73,7 @@ mod initialisation_array_base {
         // `Data` has an associated type, `Elem`, the element type.
         // This syntax tells the compiler that `Elem` is `f64`,
         // hence we are dealing with an array of floats.
-        S: Data<Elem=f64>,
+        S: Data<Elem = f64>,
     {
         let (n_samples, _) = observations.dim();
         let indices = rand::seq::index::sample(rng, n_samples, n_clusters).into_vec();
@@ -98,14 +98,13 @@ mod initialisation_array_base {
     /// you are likely to encounter sooner or later is `DataMut`:
     /// it is implemented by all container types that allow you to mutate data
     /// - e.g. `Array` and `ArrayViewMut`, but not `ArrayView`!
-    pub fn double_in_place(a: &mut ArrayBase<impl DataMut<Elem=f64>, Ix1>) {
+    pub fn double_in_place(a: &mut ArrayBase<impl DataMut<Elem = f64>, Ix1>) {
         /// `mapv_inplace` applies its closure argument to all elements in the array
         /// and replaces each entry with the closure's output.
         /// Given that it reuses the same memory locations,
         /// the closure input and output type must coincide
         a.mapv_inplace(|x| x * 2.);
     }
-
 
     #[test]
     fn mutate_array_base() {
