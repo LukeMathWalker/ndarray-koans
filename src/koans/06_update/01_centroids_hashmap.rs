@@ -13,7 +13,7 @@ mod update_centroids_hashmap {
     pub fn compute_centroids_hashmap(
         // (n_observations, n_features)
         observations: &ArrayBase<impl Data<Elem = f64>, Ix2>,
-        // (n_centroids,)
+        // (n_observations,)
         cluster_memberships: &ArrayBase<impl Data<Elem = usize>, Ix1>,
     ) -> HashMap<usize, IncrementalMean> {
         let (_, n_features) = observations.dim();
@@ -22,13 +22,16 @@ mod update_centroids_hashmap {
         let mut centroids: HashMap<usize, IncrementalMean> = HashMap::new();
 
         // We iterate over our observations and cluster memberships in lock-step.
-        let iterator = observations.genrows().into_iter().zip(cluster_memberships.iter());
+        let iterator = observations
+            .genrows()
+            .into_iter()
+            .zip(cluster_memberships.iter());
         for (row, cluster_index) in iterator {
             // If we have already encountered an observation that belongs to the
             // `cluster_index`th cluster, we retrieve the current rolling mean (our new centroid)
             // and we update it using the current observation.
             if let Some(rolling_mean) = centroids.get_mut(cluster_index) {
-                rolling_mean.accumulate(&row);
+                rolling_mean.update(&row);
             } else {
                 // If we have not yet encountered an observation that belongs to the
                 // `cluster_index`th cluster, we set its centroid to `row`,
