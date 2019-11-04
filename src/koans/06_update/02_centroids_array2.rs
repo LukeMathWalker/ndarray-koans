@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod update_centroids_array2 {
+    use crate::path_to_enlightenment::update_centroids_hashmap::compute_centroids_hashmap;
     use approx::assert_abs_diff_eq;
-    use ndarray::{array, stack, Array, Array1, Array2, ArrayBase, Axis, Data, Ix1, Ix2, s};
+    use ndarray::{array, s, stack, Array, Array1, Array2, ArrayBase, Axis, Data, Ix1, Ix2};
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
     use std::collections::HashMap;
-    use crate::path_to_enlightenment::update_centroids_hashmap::compute_centroids_hashmap;
 
     /// As we highlighted several times, K-means is an iterative algorithm.
     /// We will perform the assignment and update steps until we are satisfied
@@ -26,7 +26,8 @@ mod update_centroids_array2 {
         let centroids_hashmap = compute_centroids_hashmap(&observations, &cluster_memberships);
 
         // Go back to "cluster generation / dataset" if you are looking for inspiration!
-        let mut new_centroids: Array2<f64> = Array2::zeros(observations.dim());
+        let mut new_centroids: Array2<f64> =
+            Array2::zeros((centroids_hashmap.len(), observations.shape()[1]));
         for (cluster_index, centroid) in centroids_hashmap.into_iter() {
             let mut new_centroid = new_centroids.index_axis_mut(Axis(0), cluster_index);
             // .assign sets each element of `new_centroid`
@@ -72,5 +73,7 @@ mod update_centroids_array2 {
             expected_centroid_2,
             epsilon = 1e-5
         );
+
+        assert_eq!(centroids.len_of(Axis(0)), 2);
     }
 }
