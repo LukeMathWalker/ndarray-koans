@@ -21,7 +21,7 @@ Enjoy!
 ### Software
 
 * Rust 1.37 (or higher) with `cargo`
-    * Check [link](https://www.rust-lang.org/tools/install) for installation instruction if you don't have Rust on your version
+    * Check [link](https://www.rust-lang.org/tools/install) for installation instruction if you don't have Rust installed on your machine 
     * If you already have Rust installed, run `rustc --version` to check the version.
       Run `rustup update` if you need to update your toolchain (if you installed using `rustup`)
       
