@@ -13,34 +13,34 @@ mod cluster_generation_translation {
         let n_features = __;
         let origin_cluster: Array2<f64> =
             Array::random((n_observations, n_features), StandardNormal);
-        /// So far we have used `Array` as one would use `Vec`: as a data structure, nothing more.
-        /// But `Array` is designed for numerical computations - you should not be surprised to find
-        /// out that `Array` implements `Add`, `Mul`, `Sub`, etc... hence you can sum, subtract
-        /// and element-wise multiply array together.
-        ///
-        /// There is a gotcha though: the shapes of the two operands have to be compatible.
-        /// You can guess as much if you uncomment the expression below and check the related
-        /// compiler error:
-        ///
-        /// ```
-        /// origin_cluster + centroid
-        /// ```
-        ///
-        /// `origin_cluster` has shape (n_observations, n_features) while `centroid`
-        /// has shape (n_features,).
-        /// To sum them together, we need to **view** `centroid` as a 2-d array, with the same
-        /// shape of `origin_cluster`.
-        ///
-        /// We can achieve this using broadcasting: we create a **view** of `centroid` that has
-        /// the correct shape.
-        /// Creating a view does not involve any copying/cloning of data or memory allocation:
-        /// it's equivalent to a slice for a vector - we are creating a reference to the same data
-        /// (or a subset of those) with a different shape information attached.
-        ///
-        /// Broadcasting is not always successful: the original shape and the final shape
-        /// must be compatible.
-        /// Check `broadcast`'s documentation for more details:
-        /// https://docs.rs/ndarray/0.13.0/ndarray/struct.ArrayBase.html#method.broadcast
+        // So far we have used `Array` as one would use `Vec`: as a data structure, nothing more.
+        // But `Array` is designed for numerical computations - you should not be surprised to find
+        // out that `Array` implements `Add`, `Mul`, `Sub`, etc... hence you can sum, subtract
+        // and element-wise multiply array together.
+        //
+        // There is a gotcha though: the shapes of the two operands have to be compatible.
+        // You can guess as much if you uncomment the expression below and check the related
+        // compiler error:
+        //
+        // ```
+        // origin_cluster + centroid
+        // ```
+        //
+        // `origin_cluster` has shape (n_observations, n_features) while `centroid`
+        // has shape (n_features,).
+        // To sum them together, we need to **view** `centroid` as a 2-d array, with the same
+        // shape of `origin_cluster`.
+        //
+        // We can achieve this using broadcasting: we create a **view** of `centroid` that has
+        // the correct shape.
+        // Creating a view does not involve any copying/cloning of data or memory allocation:
+        // it's equivalent to a slice for a vector - we are creating a reference to the same data
+        // (or a subset of those) with a different shape information attached.
+        //
+        // Broadcasting is not always successful: the original shape and the final shape
+        // must be compatible.
+        // Check `broadcast`'s documentation for more details:
+        // https://docs.rs/ndarray/0.13.0/ndarray/struct.ArrayBase.html#method.broadcast
         origin_cluster
             + centroid.broadcast(__)
     }
