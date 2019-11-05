@@ -92,6 +92,6 @@ mod cluster_generation_dataset {
         // Definitely smoke check this output!
         // If all went accordingly to our plan, you should not see any observation next to (0, 0).
         // You can use again the same "Cluster generation" Jupyter notebook you used before.
-        write_npy("dataset.npy", dataset).expect("Failed to write array in npy format.");
+        write_npy("python/dataset.npy", dataset).expect("Failed to write array in npy format.");
     }
 }

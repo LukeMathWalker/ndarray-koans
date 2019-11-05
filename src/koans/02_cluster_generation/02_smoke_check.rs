@@ -23,7 +23,7 @@ mod cluster_generation_smoke_check {
     /// give it a go!
     fn smoke_check() {
         let a: Array2<f64> = generate_cluster(__, 2);
-        let filename = "cluster_smoke_check.npy";
+        let filename = "python/cluster_smoke_check.npy";
 
         write_npy(__, __).expect("Failed to write array in npy format.");
         let b: Array2<f64> = read_npy(__).expect("Failed to read array from npy format.");

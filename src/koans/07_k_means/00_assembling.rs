@@ -74,9 +74,9 @@ mod k_means_assembling {
         let centroids = k_means(n_clusters, &dataset, &mut rng, tolerance, max_n_iterations);
         let cluster_memberships = compute_cluster_memberships(&centroids, &dataset);
 
-        write_npy("clustered_dataset.npy", dataset)
+        write_npy("python/clustered_dataset.npy", dataset)
             .expect("Failed to write .npy file");
-        write_npy("clustered_memberships.npy", cluster_memberships.map(|&x| x as u64))
+        write_npy("python/clustered_memberships.npy", cluster_memberships.map(|&x| x as u64))
             .expect("Failed to write .npy file");
     }
 }

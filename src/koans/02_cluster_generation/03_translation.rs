@@ -59,7 +59,7 @@ mod cluster_generation_translation {
 
         // Use the `Cluster generation` notebook to verify that the generated
         // cluster looks like we expect it to look!
-        let filename = "translated_cluster_smoke_check.npy";
+        let filename = "python/translated_cluster_smoke_check.npy";
         write_npy(filename, a).expect("Failed to write array in npy format.");
     }
 }
