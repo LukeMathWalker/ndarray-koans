@@ -2,7 +2,7 @@
 
 Happy RustFest!
 
-It's my pleasure to welcome you to the "ML introduction to ndarray" workshop!
+It's my pleasure to welcome you to the *ML introduction to ndarray* workshop!
 
 The material is structured as a series of exercises, or koans, that you can find in the `src/koans` directory.
 
