@@ -44,12 +44,10 @@ mod k_means_assembling {
         let mut n_iterations = 0;
 
         loop {
-            n_iterations += 1;
             let memberships = compute_cluster_memberships(&centroids, observations);
             let new_centroids = compute_centroids(observations, &memberships);
 
-            has_converged = new_centroids.sq_l2_dist(&centroids).unwrap() < tolerance
-                || n_iterations > max_n_iterations;
+            has_converged = __;
 
             centroids = new_centroids;
 
@@ -59,90 +57,6 @@ mod k_means_assembling {
         }
 
         centroids
-    }
-
-    pub fn compute_cluster_memberships(
-        centroids: &ArrayBase<impl Data<Elem = f64>, Ix2>,
-        observations: &ArrayBase<impl Data<Elem = f64>, Ix2>,
-    ) -> Array1<usize> {
-        let cluster_memberships = observations.map_axis(Axis(1), |sample| {
-            let mut iterator = centroids.genrows().into_iter();
-
-            let first_centroid = iterator.next().expect("No centroids - degenerate case!");
-            let mut closest_index = 0;
-            let mut minimum_distance = sample.sq_l2_dist(&first_centroid).unwrap();
-
-            for (index, centroid) in iterator.enumerate() {
-                let distance = sample.sq_l2_dist(&centroid).unwrap();
-                if distance < minimum_distance {
-                    minimum_distance = distance;
-                    // We skipped the first centroid in the for loop
-                    closest_index = index + 1;
-                }
-            }
-
-            closest_index
-        });
-        cluster_memberships
-    }
-
-    pub fn generate_dataset(
-        cluster_size: usize,
-        centroids: ArrayView2<f64>,
-        rng: &mut impl Rng,
-    ) -> Array2<f64> {
-        // Let's allocate an array of the right shape to store the final dataset.
-        // We will then progressively replace these zeros with the observations in each generated
-        // cluster.
-        let (n_clusters, n_features) = centroids.dim();
-        let mut dataset: Array2<f64> = Array2::zeros((cluster_size * n_clusters, n_features));
-
-        // There are many ways to iterate over an n-dimensional array.
-        // `genrows` returns "generalised rows" or "lanes":
-        // - regular rows of length `b`, if `self` is a 2-d array of shape `a` x `b`;
-        // - `a` × `b` × ... × `l` rows each of length `m` for an n-dimensional array of shape
-        //   `a` × `b` × ... × `l` × `m`.
-        //
-        // `enumerate` is an iterator method to get the element index in the iterator
-        // alongside the element itself.
-        for (cluster_index, centroid) in centroids.genrows().into_iter().enumerate() {
-            let cluster = generate_cluster(cluster_size, centroid, rng);
-
-            // Each cluster will contain `cluster_size` observations:
-            // let's craft an index range in such a way that, at the end,
-            // all zeros in `dataset` have been replaced with the observations in our
-            // generated clusters.
-            // You can create n-dimensional index ranges using the `s!` macro: check
-            // the documentation for more details on its syntax and examples of this macro
-            // in action - https://docs.rs/ndarray/0.13.0/ndarray/macro.s.html
-            let indexes = s![
-                cluster_index * cluster_size..(cluster_index + 1) * cluster_size,
-                ..
-            ];
-            // `slice_mut` returns a **mutable view**: same principle of `ArrayView`, with the
-            // privilege of mutable access.
-            // As you might guess, you can only have one mutable view of an array going around
-            // at any point in time.
-            // The output type of `slice_mut` is `ArrayViewMut`, equivalent to `&mut [A]`
-            // when comparing `Array` to `Vec`.
-            dataset.slice_mut(indexes).assign(&cluster);
-        }
-        dataset
-    }
-
-    pub fn generate_cluster(
-        n_observations: usize,
-        centroid: ArrayView1<f64>,
-        rng: &mut impl Rng,
-    ) -> Array2<f64> {
-        // `random_using` allows us to specify the random number generator we wish to use
-        let n_features = centroid.len();
-        let origin_cluster: Array2<f64> =
-            Array::random_using((n_observations, n_features), StandardNormal, rng);
-        let translation = centroid
-            .broadcast((n_observations, n_features))
-            .expect("Failed to broadcast");
-        origin_cluster + translation
     }
 
     #[test]

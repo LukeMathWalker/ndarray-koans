@@ -58,10 +58,7 @@ mod update_incremental_mean {
         pub fn update(&mut self, new_observation: &ArrayBase<impl Data<Elem = f64>, Ix1>) {
             // Refer to https://docs.rs/ndarray/0.13.0/ndarray/struct.ArrayBase.html#arithmetic-operations
             // when working with array arithmetic operations!
-            let mut increment: Array1<f64> = &self.current_mean - new_observation;
-            increment.mapv_inplace(|x| x / (self.n_observations + 1) as f64);
-            self.current_mean -= &increment;
-            self.n_observations += 1;
+            __
         }
     }
 

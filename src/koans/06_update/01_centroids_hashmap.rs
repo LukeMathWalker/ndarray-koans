@@ -16,32 +16,7 @@ mod update_centroids_hashmap {
         // (n_observations,)
         cluster_memberships: &ArrayBase<impl Data<Elem = usize>, Ix1>,
     ) -> HashMap<usize, IncrementalMean> {
-        let (_, n_features) = observations.dim();
-        // `centroids` is a cluster index -> rolling mean mapping.
-        // We will update it while we iterate over our observations.
-        let mut centroids: HashMap<usize, IncrementalMean> = HashMap::new();
-
-        // We iterate over our observations and cluster memberships in lock-step.
-        let iterator = observations
-            .genrows()
-            .into_iter()
-            .zip(cluster_memberships.iter());
-        for (row, cluster_index) in iterator {
-            // If we have already encountered an observation that belongs to the
-            // `cluster_index`th cluster, we retrieve the current rolling mean (our new centroid)
-            // and we update it using the current observation.
-            if let Some(rolling_mean) = centroids.get_mut(cluster_index) {
-                rolling_mean.update(&row);
-            } else {
-                // If we have not yet encountered an observation that belongs to the
-                // `cluster_index`th cluster, we set its centroid to `row`,
-                // initialising our `RollingMean` accumulator.
-                let new_centroid = IncrementalMean::new(row.to_owned());
-                // .to_owned takes our `row` view as input and returns an owned array.
-                centroids.insert(*cluster_index, new_centroid);
-            }
-        }
-        centroids
+        __
     }
 
     #[test]
