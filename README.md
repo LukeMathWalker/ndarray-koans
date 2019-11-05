@@ -41,11 +41,11 @@ Throughout the workshop, the following resources might turn out to be useful:
   introduction to `ndarray` that assumes no Rust knowledge (not complete yet 😅);
 * The [Rust Book](https://doc.rust-lang.org/book/);
 * Docs for the crates in the `ndarray` ecosystem:
-    * [`ndarray`](https://docs.rs/ndarray/0.13.0/ndarray/);
-    * [`ndarray-rand`](https://docs.rs/ndarray-rand/0.11.0/ndarray_rand/);
-    * [`ndarray-stats`](https://docs.rs/ndarray-stats/0.3.0/ndarray/);
-    * [`ndarray-npy`](https://docs.rs/ndarray-npy/0.5.0/ndarray_npy/);
-    * [`ndarray-linalg`](https://docs.rs/ndarray-linalg/0.12.0/ndarray_linalg/);
+    * [`ndarray`](https://docs.rs/ndarray/0.13.0/ndarray/)
+    * [`ndarray-rand`](https://docs.rs/ndarray-rand/0.11.0/ndarray_rand/)
+    * [`ndarray-stats`](https://docs.rs/ndarray-stats/0.3.0/ndarray/)
+    * [`ndarray-npy`](https://docs.rs/ndarray-npy/0.5.0/ndarray_npy/)
+    * [`ndarray-linalg`](https://docs.rs/ndarray-linalg/0.12.0/ndarray_linalg/)
 * If you are familiar with Python's `NumPy`, check [`ndarray` for `NumPy` users](https://docs.rs/ndarray/0.13.0/ndarray/doc/ndarray_for_numpy_users/index.html).
     
     
