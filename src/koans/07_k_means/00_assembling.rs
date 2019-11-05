@@ -10,13 +10,13 @@ mod k_means_assembling {
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
     use ndarray_stats::DeviationExt;
-    // All the routines we worked hard to implement!
-    // use super::cluster_generation_dataset::generate_dataset;
-    use super::initialisation_array_base::get_random_centroids;
-    // use super::assignment_cluster_memberships::compute_cluster_memberships;
-    use super::update_centroids_array2::compute_centroids;
     use ndarray_npy::write_npy;
     use rand_isaac::Isaac64Rng;
+    // All the routines we worked hard to implement!
+    use super::cluster_generation_dataset::generate_dataset;
+    use super::initialisation_array_base::get_random_centroids;
+    use super::assignment_cluster_memberships::compute_cluster_memberships;
+    use super::update_centroids_array2::compute_centroids;
 
     /// In the end, here we are!
     /// We just need to glue together everything we have developed so far to get a working
