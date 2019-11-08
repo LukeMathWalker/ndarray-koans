@@ -45,7 +45,7 @@ mod k_means_assembling {
 
         loop {
             let memberships = compute_cluster_memberships(&centroids, observations);
-            let new_centroids = compute_centroids(observations, &memberships);
+            let new_centroids = compute_centroids(n_clusters, observations, &memberships);
 
             has_converged = __;
 

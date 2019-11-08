@@ -18,6 +18,7 @@ mod update_centroids_array2 {
     /// Let's wrap our `compute_centroids_hashmap` to return a 2-dimensional array,
     /// where the i-th row corresponds to the i-th cluster.
     pub fn compute_centroids(
+        n_centroids: usize,
         // (n_observations, n_features)
         observations: &ArrayBase<impl Data<Elem = f64>, Ix2>,
         // (n_observations,)
@@ -50,7 +51,7 @@ mod update_centroids_array2 {
         let memberships = stack(Axis(0), &[memberships_1.view(), memberships_2.view()]).unwrap();
 
         // Does it work?
-        let centroids = compute_centroids(&observations, &memberships);
+        let centroids = compute_centroids(2, &observations, &memberships);
         assert_abs_diff_eq!(
             // `index_axis(axis, index)` returns an array with 1 less dimension,
             // taking the slice corresponding to `index` along axis `axis`.
