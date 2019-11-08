@@ -26,7 +26,14 @@ mod update_centroids_array2 {
         let centroids_hashmap = compute_centroids_hashmap(&observations, &cluster_memberships);
 
         // Go back to "cluster generation / dataset" if you are looking for inspiration!
-        __
+        let n_centroids = centroids_hashmap.len();
+        let (_, n_features) = observations.dim();
+
+        let mut centroids: Array2<f64> = Array2::zeros((n_centroids, n_features));
+        for (centroid_index, centroid) in centroids_hashmap.into_iter() {
+            centroids.slice_mut(s![centroid_index, ..]).assign(&centroid.current_mean);
+        }
+        centroids
     }
 
     #[test]

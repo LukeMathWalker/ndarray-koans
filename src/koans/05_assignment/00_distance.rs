@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod assignment_distance {
     use approx::assert_abs_diff_eq;
-    use ndarray::{array, Array, Array1};
+    use ndarray::{array, Array, Array1, Dimension};
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
 
@@ -17,7 +17,7 @@ mod assignment_distance {
     /// where `a` and `b` are n-dimensional vectors.
     ///
     /// Reference: https://en.wikipedia.org/wiki/Euclidean_distance
-    pub fn euclidean_distance(a: &Array1<f64>, b: &Array1<f64>) -> f64 {
+    pub fn euclidean_distance<D: Dimension>(a: &Array<f64, D>, b: &Array<f64, D>) -> f64 {
         // No hints this time, just a bunch of tests - go ahead!
         (a - b).mapv_into(|x| x.powi(2)).sum().sqrt()
     }
