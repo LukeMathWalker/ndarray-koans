@@ -114,6 +114,6 @@ mod initialisation_array_base {
         // This will fail to compile!
         // Check the compiler error: can you understand what has gone wrong in light of the above context?
         // Comment it out to progress to the next exercise :)
-        double_in_place(&mut a.view());
+        // double_in_place(&mut a.view());
     }
 }

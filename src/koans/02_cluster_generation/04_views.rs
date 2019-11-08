@@ -1,7 +1,9 @@
 #[cfg(test)]
 mod cluster_generation_views {
     use approx::assert_abs_diff_eq;
-    use ndarray::{array, Array2, ArrayView1, Axis};
+    use ndarray::{array, Array2, ArrayView1, Axis, Array};
+    use ndarray_rand::RandomExt;
+    use ndarray_rand::rand_distr::StandardNormal;
 
     /// Let's go for a second (or third?) take on cluster generation.
     ///
@@ -29,13 +31,17 @@ mod cluster_generation_views {
     ///
     /// Can you write `generate_cluster`'s function body without peeking at the previous test?
     pub fn generate_cluster(n_observations: usize, centroid: ArrayView1<f64>) -> Array2<f64> {
-        __
+        let n_features = centroid.dim();
+        let origin_cluster: Array2<f64> =
+            Array::random((n_observations, n_features), StandardNormal);
+        origin_cluster
+            + centroid.broadcast((n_observations, n_features)).expect("Failed to broadcast")
     }
 
     #[test]
     fn views() {
         let centroid = array![10., 10.];
-        let a: Array2<f64> = generate_cluster(1000, __);
+        let a: Array2<f64> = generate_cluster(1000, centroid.view());
 
         let inferred_centroid = a.mean_axis(Axis(0)).expect("Failed to compute the mean.");
         let inferred_variance = a.var_axis(Axis(0), 1.);

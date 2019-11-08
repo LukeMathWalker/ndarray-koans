@@ -10,7 +10,7 @@ mod cluster_generation_translation {
     /// and generate a cluster of points around it (normally distributed with unit variance,
     /// as we did before).
     pub fn generate_cluster(n_observations: usize, centroid: Array1<f64>) -> Array2<f64> {
-        let n_features = __;
+        let n_features = centroid.dim();
         let origin_cluster: Array2<f64> =
             Array::random((n_observations, n_features), StandardNormal);
         // So far we have used `Array` as one would use `Vec`: as a data structure, nothing more.
@@ -42,7 +42,7 @@ mod cluster_generation_translation {
         // Check `broadcast`'s documentation for more details:
         // https://docs.rs/ndarray/0.13.0/ndarray/struct.ArrayBase.html#method.broadcast
         origin_cluster
-            + centroid.broadcast(__)
+            + centroid.broadcast((n_observations, n_features)).expect("Failed to broadcast")
     }
 
     #[test]

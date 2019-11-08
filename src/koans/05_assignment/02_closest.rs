@@ -18,7 +18,19 @@ mod assignment_closest {
     ) -> usize {
         // Remember: you can use `.genrows().into_iter()` to get an iterator over the rows
         // of a 2-dimensional array.
-        __
+        let mut iterator = centroids.genrows().into_iter().peekable();
+
+        let first_centroid = iterator.peek().expect("There has to be at least one centroid");
+        let (mut closest_index, mut minimum_distance) = (0, euclidean_distance(&first_centroid , &observation));
+
+        for (centroid_index, centroid) in iterator.enumerate() {
+            let distance = euclidean_distance(&centroid, &observation);
+            if distance < minimum_distance {
+                closest_index = centroid_index;
+                minimum_distance = distance;
+            }
+        }
+        closest_index
     }
 
     #[test]

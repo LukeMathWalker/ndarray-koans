@@ -1,19 +1,20 @@
 #[cfg(test)]
 mod assignment_generalised_distance {
-    use ndarray::{Array, Array1};
+    use ndarray::{Array, Array1, Data, ArrayBase, Ix1};
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
 
     /// To maximise the flexibility of this function's API, let's change the signature to make
     /// sure that we can call `euclidean_distance` using references to `Array`s, `ArrayView`s,
     /// `ArrayViewMut`s... or a combination of those!
-    pub fn euclidean_distance<__>(a: &__, b: &__) -> f64
+    pub fn euclidean_distance<S, T>(a: &ArrayBase<S, Ix1>, b: &ArrayBase<T, Ix1>) -> f64
     where
-        __: __,
+        S: Data<Elem=f64>,
+        T: Data<Elem=f64>,
     {
         // You can probably copy-paste the body you just wrote in the previous exercise
         // If you are unlucky you might have to do some minor adjustments
-        __
+        (a - b).mapv_into(|x| x.powi(2)).sum().sqrt()
     }
 
     #[test]

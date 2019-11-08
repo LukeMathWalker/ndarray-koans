@@ -27,7 +27,7 @@
 mod interlude_the_plan {
     #[test]
     fn the_plan() {
-        let i_am_ready_to_cluster_things = __;
+        let i_am_ready_to_cluster_things = true;
 
         assert!(i_am_ready_to_cluster_things);
     }

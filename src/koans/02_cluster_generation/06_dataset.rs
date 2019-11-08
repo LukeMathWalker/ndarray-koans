@@ -15,7 +15,8 @@ mod cluster_generation_dataset {
         // Let's allocate an array of the right shape to store the final dataset.
         // We will then progressively replace these zeros with the observations in each generated
         // cluster.
-        let mut dataset: Array2<f64> = Array2::zeros(__);
+        let (n_centroids, n_features) = centroids.dim();
+        let mut dataset: Array2<f64> = Array2::zeros((n_centroids * cluster_size, n_features));
 
         // There are many ways to iterate over an n-dimensional array.
         // `genrows` returns "generalised rows" or "lanes":
@@ -35,7 +36,7 @@ mod cluster_generation_dataset {
             // You can create n-dimensional index ranges using the `s!` macro: check
             // the documentation for more details on its syntax and examples of this macro
             // in action - https://docs.rs/ndarray/0.13.0/ndarray/macro.s.html
-            let indexes = s![__];
+            let indexes = s![cluster_index * cluster_size..(cluster_index + 1) * cluster_size, ..];
             // `slice_mut` returns a **mutable view**: same principle of `ArrayView`, with the
             // privilege of mutable access.
             // As you might guess, you can only have one mutable view of an array going around

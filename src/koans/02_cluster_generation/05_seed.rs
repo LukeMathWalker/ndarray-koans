@@ -13,7 +13,7 @@ mod cluster_generation_seed {
     ) -> Array2<f64> {
         // `random_using` allows us to specify the random number generator we wish to use
         let n_features = centroid.len();
-        let origin_cluster: Array2<f64> = Array::random_using(__);
+        let origin_cluster: Array2<f64> = Array::random_using((n_observations, n_features), StandardNormal, rng);
         let translation = centroid
             .broadcast((n_observations, n_features))
             .expect("Failed to broadcast");
@@ -47,11 +47,11 @@ mod cluster_generation_seed {
         ///
         /// We can use `Isaac64Rng` as our seedable rng (from the `rand_isaac` crate).
         let seed = 42;
-        let mut first_rng = Isaac64Rng::seed_from_u64(__);
-        let mut second_rng = Isaac64Rng::seed_from_u64(__);
+        let mut first_rng = Isaac64Rng::seed_from_u64(seed);
+        let mut second_rng = Isaac64Rng::seed_from_u64(seed);
 
-        let a: Array2<f64> = generate_cluster(n, centroid.view(), __);
-        let b: Array2<f64> = generate_cluster(n, centroid.view(), __);
+        let a: Array2<f64> = generate_cluster(n, centroid.view(), &mut first_rng);
+        let b: Array2<f64> = generate_cluster(n, centroid.view(), &mut second_rng);
 
         // Will it work?
         assert_eq!(a, b);

@@ -19,7 +19,7 @@ mod assignment_distance {
     /// Reference: https://en.wikipedia.org/wiki/Euclidean_distance
     pub fn euclidean_distance(a: &Array1<f64>, b: &Array1<f64>) -> f64 {
         // No hints this time, just a bunch of tests - go ahead!
-        __
+        (a - b).mapv_into(|x| x.powi(2)).sum().sqrt()
     }
 
     #[test]

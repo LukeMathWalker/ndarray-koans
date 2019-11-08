@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod update_centroids_hashmap {
     use approx::assert_abs_diff_eq;
-    use ndarray::{array, stack, Array, Array1, Array2, ArrayBase, Axis, Data, Ix1, Ix2};
+    use ndarray::{array, stack, Array, Array1, Array2, ArrayBase, Axis, Data, Ix1, Ix2, Zip};
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
     // Let's re-use our incremental mean implementation
@@ -16,7 +16,17 @@ mod update_centroids_hashmap {
         // (n_observations,)
         cluster_memberships: &ArrayBase<impl Data<Elem = usize>, Ix1>,
     ) -> HashMap<usize, IncrementalMean> {
-        __
+        let mut new_centroids: HashMap<usize, IncrementalMean> = HashMap::new();
+        Zip::from(observations.genrows())
+            .and(cluster_memberships)
+            .apply(|observation, cluster_membership| {
+                if let Some(incremental_mean) = new_centroids.get_mut(cluster_membership) {
+                    incremental_mean.update(&observation);
+                } else {
+                    new_centroids.insert(*cluster_membership, IncrementalMean::new(observation.to_owned()));
+                }
+            });
+        new_centroids
     }
 
     #[test]

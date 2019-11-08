@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod assignment_cluster_memberships {
-    use ndarray::{array, s, Array, Array1, Array2, ArrayBase, Data, Ix2};
+    use ndarray::{array, s, Array, Array1, Array2, ArrayBase, Data, Ix2, Axis};
     use ndarray_rand::rand::SeedableRng;
     use ndarray_rand::rand_distr::Uniform;
     use ndarray_rand::RandomExt;
@@ -23,7 +23,9 @@ mod assignment_cluster_memberships {
         //
         // Each 1-dimensional slice along the specified axis is replaced with the output value
         // of the closure passed as argument.
-        observations.map_axis(__, |observation| __)
+        observations.map_axis(Axis(1), |observation| {
+            closest_centroid(&centroids, &observation)
+        })
     }
 
     #[test]

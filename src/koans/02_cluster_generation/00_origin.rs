@@ -29,6 +29,7 @@ mod cluster_generation_origin {
     use approx::assert_abs_diff_eq;
     use ndarray::{array, Array, Axis};
     use ndarray_rand::RandomExt;
+    use ndarray_rand::rand_distr::StandardNormal;
 
     /// Our first step in our K-means implementation journey is data generation!
     ///
@@ -40,7 +41,7 @@ mod cluster_generation_origin {
     fn origin_cluster() {
         let n_observations = 10000;
         let n_features = 2;
-        let a = Array::random((n_observations, n_features), __);
+        let a = Array::random((n_observations, n_features), StandardNormal);
 
         // The mean point of a cluster is called `centroid`.
         // We'll use this term again when implementing the actual K-means algorithm.
@@ -52,10 +53,10 @@ mod cluster_generation_origin {
         // Both `mean_axis` and `var_axis` reduce the dimensionality of the array:
         // they compute the mean and the variance along the specified axis and return a
         // new array with one less dimension (the axis you specified for reduction is removed).
-        assert_eq!(centroid.ndim(), __);
-        assert_eq!(variance.ndim(), __);
-        assert_eq!(centroid.dim(), __);
-        assert_eq!(variance.dim(), __);
+        assert_eq!(centroid.ndim(), 1);
+        assert_eq!(variance.ndim(), 1);
+        assert_eq!(centroid.dim(), 2);
+        assert_eq!(variance.dim(), 2);
 
         // When dealing with floats, it's not a good idea to use equality checks:
         // rounding errors affect the precision of the result, making strict equality

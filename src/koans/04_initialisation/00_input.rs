@@ -1,9 +1,10 @@
 #[cfg(test)]
 mod initialisation_input {
-    use ndarray::{Array, Array2, ArrayView1};
+    use ndarray::{Array, Array2, ArrayView1, ArrayView2, Axis};
     use ndarray_rand::rand::{Rng, SeedableRng};
     use ndarray_rand::rand_distr::StandardNormal;
     use ndarray_rand::RandomExt;
+    use ndarray_rand::rand::seq;
     use rand_isaac::Isaac64Rng;
 
     // K-means, as the name says, requires you to declare `k` upfront: the number of clusters you are
@@ -14,10 +15,12 @@ mod initialisation_input {
     // distinct observations from your dataset - as simple as that (and it works quite well!).
     pub fn get_random_centroids(
         n_clusters: usize,
-        observations: __,
+        observations: ArrayView2<f64>,
         rng: &mut impl Rng,
     ) -> Array2<f64> {
-        __
+        let n_observations = observations.len_of(Axis(0));
+        let indexes = seq::index::sample(rng, n_observations, n_clusters).into_vec();
+        observations.select(Axis(0), &indexes)
     }
 
     // Helper function.

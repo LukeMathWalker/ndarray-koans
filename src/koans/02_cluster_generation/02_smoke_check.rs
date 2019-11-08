@@ -22,11 +22,11 @@ mod cluster_generation_smoke_check {
     /// You can find a plug-and-play "Cluster generation" Jupyter notebook in the `python` folder,
     /// give it a go!
     fn smoke_check() {
-        let a: Array2<f64> = generate_cluster(__, 2);
+        let a: Array2<f64> = generate_cluster(100, 2);
         let filename = "python/cluster_smoke_check.npy";
 
-        write_npy(__, __).expect("Failed to write array in npy format.");
-        let b: Array2<f64> = read_npy(__).expect("Failed to read array from npy format.");
+        write_npy(filename, a.view()).expect("Failed to write array in npy format.");
+        let b: Array2<f64> = read_npy(filename).expect("Failed to read array from npy format.");
 
         assert_eq!(a, b);
     }

@@ -9,7 +9,7 @@ mod constructors_macro_literal {
     // for 1-dimensional arrays and gives you directly an `Array` instance.
     fn macro_literal() {
         let from_vector = Array::from(vec![0, 1, 2]);
-        let with_macro = array![__];
+        let with_macro = array![0, 1, 2];
 
         assert_eq!(from_vector, with_macro);
     }
