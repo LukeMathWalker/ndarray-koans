@@ -1,4 +1,4 @@
-/// Even the best journey eventually come to an end.
+/// Even the best journeys eventually come to an end.
 ///
 /// I hope you found the workshop enjoyable and interesting.
 /// As it happens for all types of learning material and teaching mediums,
