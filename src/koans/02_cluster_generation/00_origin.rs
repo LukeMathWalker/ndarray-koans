@@ -27,7 +27,7 @@
 #[cfg(test)]
 mod cluster_generation_origin {
     use approx::assert_abs_diff_eq;
-    use ndarray::{Array, Axis};
+    use ndarray::{array, Array, Axis};
     use ndarray_rand::RandomExt;
 
     /// Our first step in our K-means implementation journey is data generation!
