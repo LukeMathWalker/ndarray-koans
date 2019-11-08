@@ -46,7 +46,7 @@ mod cluster_generation_origin {
         // We'll use this term again when implementing the actual K-means algorithm.
         // `mean_axis` can return `None` if the axis we are reducing has length 0
         // (not our case here, we can safely use `expect` or `unwrap` to get the value).
-        let centroid = a.mean_axis(Axis(0)).expect("Failed to computer mean.");
+        let centroid = a.mean_axis(Axis(0)).expect("Failed to compute mean.");
         let variance = a.var_axis(Axis(0), 1.);
 
         // Both `mean_axis` and `var_axis` reduce the dimensionality of the array:
