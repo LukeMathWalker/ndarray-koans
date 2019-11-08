@@ -38,9 +38,10 @@ mod assignment_cluster_memberships {
             &mut rng,
         );
 
+        let expected_memberships: Vec<usize> = (0..n_centroids).into_iter().collect();
         assert_eq!(
             compute_cluster_memberships(&centroids, &centroids),
-            (0..n_centroids).into_iter().collect()
+            Array1::from(expected_memberships)
         );
     }
 
@@ -48,7 +49,7 @@ mod assignment_cluster_memberships {
     fn oracle_test() {
         let centroids = array![[0., 0.], [1., 2.], [20., 0.], [0., 20.],];
         let observations = array![[1., 0.5], [20., 2.], [20., 0.], [7., 20.],];
-        let memberships = array![1, 2, 2, 3];
+        let memberships = array![0, 2, 2, 3];
 
         assert_eq!(
             compute_cluster_memberships(&centroids, &observations),
