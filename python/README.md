@@ -39,3 +39,7 @@ You can install the required packages with:
 ```bash
 pip install -r requirements.txt
 ```
+Then launch Jupyter with:
+```bash
+jupyter notebook
+```
