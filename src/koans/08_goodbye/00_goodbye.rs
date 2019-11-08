@@ -37,7 +37,7 @@
 /// - Twitter (@algo_luca)
 /// - Email (rust@lpalmieri.com)
 ///
-/// ~ It has been pleasure to have you on board! ~
+/// ~ It has been a pleasure to have you on board! ~
 ///
 #[cfg(test)]
 mod goodbye {
