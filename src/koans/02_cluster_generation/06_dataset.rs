@@ -83,15 +83,16 @@ mod cluster_generation_dataset {
             dataset.dim(),
             (centroids.shape()[0] * n, centroids.shape()[1])
         );
-        // There is a negligible (tiny but greater than zero) probability that our random number
-        // generator genuinely spits out (0, 0).
-        // But, being pragmatic, it's safe enough to assume that this assertion will only fail
-        // if there is something wrong with our slicing/assignment logic.
-        assert!(dataset.genrows().into_iter().all(|r| r != array![0., 0.]));
 
         // Definitely smoke check this output!
         // If all went accordingly to our plan, you should not see any observation next to (0, 0).
         // You can use again the same "Cluster generation" Jupyter notebook you used before.
         write_npy("python/dataset.npy", dataset).expect("Failed to write array in npy format.");
+
+        // There is a negligible (tiny but greater than zero) probability that our random number
+        // generator genuinely spits out (0, 0).
+        // But, being pragmatic, it's safe enough to assume that this assertion will only fail
+        // if there is something wrong with our slicing/assignment logic.
+        assert!(dataset.genrows().into_iter().all(|r| r != array![0., 0.]));
     }
 }
