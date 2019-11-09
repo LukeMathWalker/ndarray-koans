@@ -41,8 +41,32 @@ mod initialisation_input {
         assert!(centroids
             .genrows()
             .into_iter()
-            .all(|centroid| is_row_of(&observations, &centroid)));
+            .all(|centroid| is_row_of(&observations, &centroid)), "Centroids should be a subset of our observations");
     }
+
+
+    // Helper function nr 2.
+    // Check if there is only one row in `matrix` that is equal to `row`
+    fn is_unique_in(matrix: &Array2<f64>, row: &ArrayView1<f64>) -> bool {
+        matrix.genrows().into_iter().filter(|r| r == row).count() == 1
+    }
+
+    #[test]
+    fn test_unique_centroids() {
+        let mut rng = Isaac64Rng::seed_from_u64(42);
+        let n_observations = 100;
+        let n_clusters = 99; // provoke double selection
+        let observations: Array2<f64> =
+            Array::random_using((n_observations, n_clusters), StandardNormal, &mut rng);
+
+        let centroids = get_random_centroids(n_clusters, observations.view(), &mut rng);
+
+        assert!(centroids
+            .genrows()
+            .into_iter()
+            .all(|centroid| is_unique_in(&centroids, &centroid)), "centroids should be unique");
+    }
+
 
     #[test]
     #[should_panic]
