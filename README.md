@@ -1,4 +1,4 @@
-# An ML introduction to ndarray 
+# An ML introduction to ndarray
 
 Happy RustFest!
 
@@ -20,11 +20,11 @@ Enjoy!
 
 ### Software
 
-* Rust 1.37 (or higher) with `cargo`
-    * Check [link](https://www.rust-lang.org/tools/install) for installation instruction if you don't have Rust installed on your machine 
+* Rust 1.38 (or higher) with `cargo`
+    * Check [link](https://www.rust-lang.org/tools/install) for installation instruction if you don't have Rust installed on your machine
     * If you already have Rust installed, run `rustc --version` to check the version.
       Run `rustup update` if you need to update your toolchain (if you installed using `rustup`)
-      
+
 There are some Jupyter notebooks that you will have to run to perform some data visualisations. Install
 instructions for those are in `python/README.md`.
 
@@ -47,5 +47,5 @@ Throughout the workshop, the following resources might turn out to be useful:
     * [`ndarray-npy`](https://docs.rs/ndarray-npy/0.5.0/ndarray_npy/)
     * [`ndarray-linalg`](https://docs.rs/ndarray-linalg/0.12.0/ndarray_linalg/)
 * If you are familiar with Python's `NumPy`, check [`ndarray` for `NumPy` users](https://docs.rs/ndarray/0.13.0/ndarray/doc/ndarray_for_numpy_users/index.html).
-    
-    
+
+
