@@ -17,7 +17,7 @@ mod cluster_generation_as_a_function {
     ///
     /// We can use `Ix2` as dimension type, thus using `Array<f64, Ix2>` as our output type.
     /// Otherwise, we can leverage `ndarray`'s type aliases: `Array2<T>` is a shortcut
-    /// for `Array<f64, T>`.
+    /// for `Array<T, Ix2>`.
     /// As you can imagine, you can use `Array1`, `Array3`, etc. to work with a different number
     /// of dimensions.
     pub fn generate_cluster(n_observations: usize, n_features: usize) -> Array2<__> {
