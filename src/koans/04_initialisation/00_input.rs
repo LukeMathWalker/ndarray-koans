@@ -31,8 +31,9 @@ mod initialisation_input {
         let mut rng = Isaac64Rng::seed_from_u64(42);
         let n_observations = 50;
         let n_clusters = 3;
+        let n_features = 2;
         let observations: Array2<f64> =
-            Array::random_using((n_observations, n_clusters), StandardNormal, &mut rng);
+            Array::random_using((n_observations, n_features), StandardNormal, &mut rng);
 
         let centroids = get_random_centroids(n_clusters, observations.view(), &mut rng);
 
@@ -55,12 +56,14 @@ mod initialisation_input {
     fn test_unique_centroids() {
         let mut rng = Isaac64Rng::seed_from_u64(42);
         let n_observations = 100;
-        let n_clusters = 99; // provoke double selection
+        let n_clusters = 100;
+        let n_features = 3;
         let observations: Array2<f64> =
-            Array::random_using((n_observations, n_clusters), StandardNormal, &mut rng);
+            Array::random_using((n_observations, n_features), StandardNormal, &mut rng);
 
         let centroids = get_random_centroids(n_clusters, observations.view(), &mut rng);
 
+        // Each centroid should appear only once in the centroids matrix
         assert!(centroids
             .genrows()
             .into_iter()
@@ -76,9 +79,10 @@ mod initialisation_input {
         let mut rng = Isaac64Rng::seed_from_u64(42);
         let n_observations = 4;
         let n_clusters = 5;
+        let n_features = 3;
         assert!(n_observations < n_clusters);
         let observations: Array2<f64> =
-            Array::random_using((n_observations, n_clusters), StandardNormal, &mut rng);
+            Array::random_using((n_observations, n_features), StandardNormal, &mut rng);
 
         get_random_centroids(n_clusters, observations.view(), &mut rng);
     }
