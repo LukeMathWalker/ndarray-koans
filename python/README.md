@@ -22,6 +22,16 @@ docker run -p 8888:8888 -v $PWD:/home/jovyan/work -t notebook
 You can launch the docker image the first time you need it and, given that the local filesystem is mounted
 as a volume, the new `*.npy` will appear in Jupyter as soon as they are generated from the koans.
 
+### Using docker-compose
+
+Running
+```bash
+docker-compose up
+```
+should be enough to bootstrap your environment!
+
+Just open in a browser the link shown in the console output to enter your Jupyter environment.
+
 
 ### Using pipenv
 
