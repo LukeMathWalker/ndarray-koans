@@ -87,7 +87,7 @@ mod cluster_generation_dataset {
         // Definitely smoke check this output!
         // If all went accordingly to our plan, you should not see any observation next to (0, 0).
         // You can use again the same "Cluster generation" Jupyter notebook you used before.
-        write_npy("python/dataset.npy", dataset).expect("Failed to write array in npy format.");
+        write_npy("python/dataset.npy", dataset.view()).expect("Failed to write array in npy format.");
 
         // There is a negligible (tiny but greater than zero) probability that our random number
         // generator genuinely spits out (0, 0).
