@@ -14,9 +14,6 @@ mod cluster_generation_seed {
         // `random_using` allows us to specify the random number generator we wish to use
         let n_features = centroid.len();
         let origin_cluster: Array2<f64> = Array::random_using(__);
-        let translation = centroid
-            .broadcast((n_observations, n_features))
-            .expect("Failed to broadcast");
         origin_cluster + translation
     }
 
