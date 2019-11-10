@@ -19,6 +19,14 @@ mod assignment_distance {
     /// Reference: https://en.wikipedia.org/wiki/Euclidean_distance
     pub fn euclidean_distance(a: &Array1<f64>, b: &Array1<f64>) -> f64 {
         // No hints this time, just a bunch of tests - go ahead!
+        // If you wanted to cheat, you could use
+        //
+        // ```
+        // use ndarray_stats::DeviationExt;
+        // a.sq_l2_dist(b).expect("Failed to computer distance");
+        // ```
+        //
+        // But it wouldn't be very educational :P
         __
     }
 
