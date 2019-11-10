@@ -4,9 +4,9 @@
 /// It's indeed time to start with clustering itself. How do we approach it?
 ///
 /// K-means is an iterative algorithm: it progressively refines its choice of centroids.
-/// (Quick remainder: centroid = mean of the points in a cluster)
+/// (Quick reminder: centroid = mean of the points in a cluster)
 /// It's guaranteed to converge, even though it might not find the optimal set of centroids
-/// (unfortunately it can get stuck in a local minimum, finding the optimal minimum if NP-hard!).
+/// (unfortunately it can get stuck in a local minimum, finding the optimal minimum is NP-hard!).
 ///
 /// We will implement the standard K-means algorithm, also known as Lloyd's algorithm or
 /// naive K-means.
