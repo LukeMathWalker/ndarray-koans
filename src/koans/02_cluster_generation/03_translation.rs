@@ -23,7 +23,7 @@ mod cluster_generation_translation {
         // compiler error:
         //
         // ```
-        // origin_cluster + centroid
+        // centroid + origin_cluster
         // ```
         //
         // `origin_cluster` has shape (n_observations, n_features) while `centroid`
@@ -41,8 +41,19 @@ mod cluster_generation_translation {
         // must be compatible.
         // Check `broadcast`'s documentation for more details:
         // https://docs.rs/ndarray/0.13.0/ndarray/struct.ArrayBase.html#method.broadcast
-        origin_cluster
-            + centroid.broadcast(__)
+        &centroid.broadcast(__) + &origin_cluster
+        // Ndarray will also try to broadcast automatically the right operand,
+        // if that is required to make the shapes of the two operands compatible.
+        //
+        // For example,
+        //
+        // ```
+        // origin_cluster + centroid
+        // ```
+        //
+        // would work without needing any explicit broadcasting, but it's useful
+        // to do it manually at least once to understand what is going on
+        // under the hood.
     }
 
     #[test]
