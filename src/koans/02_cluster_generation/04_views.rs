@@ -35,7 +35,7 @@ mod cluster_generation_views {
     #[test]
     fn views() {
         let centroid = array![10., 10.];
-        let a: Array2<f64> = generate_cluster(1000, __);
+        let a: Array2<f64> = generate_cluster(20000, __);
 
         let inferred_centroid = a.mean_axis(Axis(0)).expect("Failed to compute the mean.");
         let inferred_variance = a.var_axis(Axis(0), 1.);
